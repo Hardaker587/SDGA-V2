@@ -5,7 +5,7 @@
       <div class="card shadow-lg">
         <div class="card-body">
           <h2 class="card-title">Total surveys completed</h2>
-          <p>000</p>
+          <p>{{ getResponsesCount() }}</p>
         </div>
       </div>
       <div class="card shadow-lg">
@@ -71,6 +71,18 @@ export default {
     QuestionMarkCircleIcon,
     DocumentReportIcon,
     AnnotationIcon,
+  },
+  methods: {
+    async getResponsesCount() {
+      let count = 0
+      await this.$database()
+        .findAll('surveyResponses')
+        .then((res) => {
+          count = Object.keys(res).length
+        })
+      console.log(count)
+      return count
+    },
   },
 }
 </script>
