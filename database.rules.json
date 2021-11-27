@@ -1,0 +1,28 @@
+{
+  "rules": {
+        "survey": {
+        ".indexOn": ["sortOrder"],
+          ".read" : true,
+            ".write": "auth.token.admin === true",
+      },
+        "surveyResponses": {
+          ".read" : true,
+            ".write": true,
+      },
+        "goal": {
+        ".indexOn": "sortOrder",
+          ".read" : true,
+            ".write": "auth.token.admin === true",
+      },
+        "goalCategory": {
+        ".indexOn": "sortOrder",
+          ".read" : true,
+            ".write": "auth.token.admin === true",
+      },
+        "users": {
+          ".read" : true,
+        ".write": true
+
+      },
+  }
+}
