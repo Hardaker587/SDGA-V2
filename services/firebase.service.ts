@@ -2,6 +2,7 @@ import { useRuntimeConfig } from '#app'
 import { initializeApp, getApps } from 'firebase/app'
 import { getDatabase } from 'firebase/database'
 import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
 
 export class FirebaseService {
   protected configuration: Object = {}
@@ -30,5 +31,9 @@ export class FirebaseService {
 
   public auth() {
     return getAuth(this.firebaseInstance())
+  }
+
+  public firestore() {
+    return getFirestore(this.firebaseInstance())
   }
 }

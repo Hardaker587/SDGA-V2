@@ -26,7 +26,16 @@
         v-slot="{ open }"
       >
         <DisclosureButton
-          class="flex justify-between w-full p-4 font-medium text-left mb-2 text-white"
+          class="
+            flex
+            justify-between
+            w-full
+            p-4
+            font-medium
+            text-left
+            mb-2
+            text-white
+          "
           :style="`background: ${goal?.color}`"
         >
           <span>{{ category.sortOrder }}. {{ category.title }}</span>
@@ -70,53 +79,48 @@ export default {
   }),
   mounted() {
     if (!this.$route.query.goal) return this.$router.push('/admin/questions/')
-    Promise.all([
-      this.fetchGoal(),
-      this.fetchCategories(this.$route.query.goal),
-      this.fetchQuestions(this.$route.query.goal),
-    ]).then(() => (this.loading = false))
+    this.initiatePage()
   },
   methods: {
+    async initiatePage() {
+      Promise.all([
+        this.fetchGoal(),
+        this.fetchCategories(this.$route.query.goal),
+        this.fetchQuestions(this.$route.query.goal),
+      ]).then(() => (this.loading = false))
+    },
     async fetchGoal() {
-      await this.$database()
-        .findOne('goal', this.$route.query.goal)
-        .then((res) => {
-          this.goal = res
-        })
-        .catch((e) => console.error(e))
+      await this.$firestore()
+        .getOneDocument('goals', this.$route.query.goal)
+        .then((res) => (this.goal = res))
     },
     async fetchCategories(goalId) {
-      await this.$database()
-        .findMany('goalCategory', 'goal', goalId)
-        .then((res) => {
-          this.categories = Object.keys(res)
-            .map((categoryKey, currentIteration) => {
-              return {
-                id: categoryKey,
-                ...res[categoryKey],
-              }
-            }, [])
-            .sort((a, b) => a.sortOrder > b.sortOrder)
+      return await this.$firestore()
+        .queryDocuments('categories', {
+          key: 'goal',
+          operator: '==',
+          value: goalId,
         })
+        .then(
+          (res) =>
+            (this.categories = res.sort((a, b) => a.sortOrder > b.sortOrder))
+        )
     },
     async fetchQuestions(goalId) {
-      await this.$database()
-        .findMany('survey', 'goal', goalId)
-        .then((res) => {
-          this.questions = Object.keys(res)
-            .map((categoryKey, currentIteration) => {
-              return {
-                id: categoryKey,
-                ...res[categoryKey],
-              }
-            }, [])
-            .sort((a, b) => a.sortOrder > b.sortOrder)
+      return await this.$firestore()
+        .queryDocuments('questions', {
+          key: 'goal',
+          operator: '==',
+          value: goalId,
         })
+        .then(
+          (res) =>
+            (this.questions = res.sort((a, b) => a.sortOrder > b.sortOrder))
+        )
     },
-
-    filterQuestions(categoryId) {
-      return this.questions.filter(
-        (question) => question.goalCategory === categoryId
+    filterQuestions(id) {
+      return this.surveyQuestions?.filter(
+        (question) => question.goalCategory === id
       )
     },
   },

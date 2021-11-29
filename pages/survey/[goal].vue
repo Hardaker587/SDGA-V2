@@ -57,62 +57,47 @@ export default {
     loading: true,
   }),
   mounted() {
-    this.goal()
+    this.initiatePage()
   },
   methods: {
+    async initiatePage() {
+      await this.goal()
+        .then(async (res) => {
+          // basically guarenteed this will always have 1 result
+          const topResult = res[0]
+          this.surveyGoal = topResult
+          await this.categories(topResult.id).then((res) => {
+            this.surveyCategories = res
+          })
+          await this.questions(topResult.id).then((res) => {
+            this.surveyQuestions = res
+          })
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
     async goal() {
-      await this.$database()
-        .findMany('goal', 'sortOrder', parseInt(this.$route.params.goal))
-        .then((res) => {
-          const id = Object.keys(res)[0]
-          this.surveyGoal = {
-            id,
-            color: res[id].color,
-            sortOrder: res[id].sortOrder,
-            title: res[id].title,
-          }
-          this.category(id)
-          this.question(id)
-          this.loading = false
-        })
-        .catch((e) => {
-          this.loading = false
-          console.error(e)
-        })
+      return await this.$firestore().queryDocuments('goals', {
+        key: 'sortOrder',
+        operator: '==',
+        value: Number(this.$route.params.goal),
+      })
     },
-    async category(key) {
-      await this.$database()
-        .findMany('goalCategory', 'goal', key)
-        .then((res) => {
-          this.surveyCategories = Object.keys(res).map(
-            (categoryKey, currentIteration) => {
-              return {
-                id: categoryKey,
-                ...res[categoryKey],
-              }
-            },
-            []
-          )
-        })
-        .catch((e) => console.error(e))
+    async categories(goalId) {
+      return await this.$firestore().queryDocuments('categories', {
+        key: 'goal',
+        operator: '==',
+        value: goalId,
+      })
     },
-    async question(key) {
-      await this.$database()
-        .findMany('survey', 'goal', key)
-        .then((res) => {
-          this.surveyQuestions = Object.keys(res).map(
-            (categoryKey, currentIteration) => {
-              return {
-                id: categoryKey,
-                ...res[categoryKey],
-              }
-            },
-            []
-          )
-        })
-        .catch((e) => console.error(e))
+    async questions(goalId) {
+      return await this.$firestore().queryDocuments('questions', {
+        key: 'goal',
+        operator: '==',
+        value: goalId,
+      })
     },
-
     filterQuestions(id) {
       return this.surveyQuestions?.filter(
         (question) => question.goalCategory === id

@@ -1,10 +1,7 @@
 <template>
   <div>
     <div class="flex items-center mb-4">
-      <button
-        class="btn btn-circle mr-4"
-        @click="$router.push('/admin')"
-      >
+      <button class="btn btn-circle mr-4" @click="$router.push('/admin')">
         <ChevronLeftIcon class="w-8" />
       </button>
       <h1 class="text-2xl font-black">Select a goal to proceed:</h1>
@@ -35,17 +32,10 @@ export default {
   },
   methods: {
     async fetchGoals() {
-      await this.$database()
-        .findAll('goal')
+      await this.$firestore()
+        .getAllDocuments('goals')
         .then((res) => {
-          this.goals = Object.keys(res)
-            .map((categoryKey, currentIteration) => {
-              return {
-                id: categoryKey,
-                ...res[categoryKey],
-              }
-            }, [])
-            .sort((a, b) => a.sortOrder > b.sortOrder)
+          this.goals = res.sort((a, b) => a.sortOrder > b.sortOrder)
         })
     },
   },

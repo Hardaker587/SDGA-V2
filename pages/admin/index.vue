@@ -86,25 +86,19 @@ export default {
   },
   methods: {
     async getResponsesCount() {
-      await this.$database()
-        .findAll('surveyResponses')
-        .then((res) => {
-          this.responsesCount = Object.keys(res).length
-        })
+      this.$firestore()
+        .documentCount('responses')
+        .then((res) => (this.responsesCount = res))
     },
     async getQuestionsCount() {
-      await this.$database()
-        .findAll('survey')
-        .then((res) => {
-          this.questionsCount = Object.keys(res).length
-        })
+      this.$firestore()
+        .documentCount('questions')
+        .then((res) => (this.questionsCount = res))
     },
     async getUserCount() {
-      await this.$database()
-        .findAll('users')
-        .then((res) => {
-          this.userCount = Object.keys(res).length
-        })
+      this.$firestore()
+        .documentCount('users')
+        .then((res) => (this.userCount = res))
     },
   },
 }
