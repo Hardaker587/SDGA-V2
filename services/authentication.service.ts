@@ -17,11 +17,15 @@ import {
 export class AuthenticationService extends FirebaseService {
   public login(
     { email, password }: AuthenticationInterface,
-    callback
+    redirect: boolean,
+    redirectUrl: string
   ): Promise<void | User> {
     return signInWithEmailAndPassword(this.auth(), email, password)
       .then((userCredential) => {
-        if (userCredential.user) return callback()
+        return userCredential.user
+      })
+      .finally(() => {
+        if (redirect) document.location.href = redirectUrl ? redirectUrl : '/'
       })
       .catch((error) => {
         const errorCode = error.code
@@ -52,7 +56,7 @@ export class AuthenticationService extends FirebaseService {
   }
 
   public async isLoggedIn() {
-    new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       onAuthStateChanged(this.auth(), (user) => {
         resolve(!!user)
       })

@@ -50,7 +50,7 @@
       </div>
       <button
         class="btn btn-primary w-7/12"
-        @click="$auth().login({ email, password }, () => router.replace('/survey/1'))"
+        @click="$auth().login({ email, password }, true, '/survey/1')"
       >
         Log in
       </button>

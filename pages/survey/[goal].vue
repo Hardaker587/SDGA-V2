@@ -1,5 +1,5 @@
 <script setup>
-authMiddleware()
+await authMiddleware()
 </script>
 <template>
   <commonLoader v-if="loading" :active="loading" />

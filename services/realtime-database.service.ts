@@ -14,9 +14,6 @@ import {
 import { DatabaseAddOneInterface } from '~/interfaces/realtime-database/DatabaseAddOne.Interface'
 export class RealtimeDatabaseService extends FirebaseService {
   public addOne(request: DatabaseAddOneInterface) {
-    console.log(this.configuration)
-    console.log(this.firebaseInstance())
-    console.log(this.database())
     return set(
       ref(this.database(), `${request.collection}/${request.reference}`),
       request.data
