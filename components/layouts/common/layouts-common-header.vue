@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar mb-2 shadow-lg sticky top-0 z-50">
+  <div class="navbar mb-2 shadow-lg sticky top-0 z-50 bg-white">
     <div class="flex-none lg:flex">
       <NavigationDrawer />
     </div>
@@ -10,6 +10,24 @@
         alt=""
       />
     </div>
+    <div class="flex" v-if="!$authStore().isLoggedIn">
+      <button
+        class="btn btn-primary mr-2"
+        @click="$router.replace('/account/login')"
+      >
+        Login
+      </button>
+      <button
+        class="btn btn-outline btn-primary"
+        @click="$router.replace('/account/sign-up')"
+      >
+        Sign up
+      </button>
+    </div>
+    <div class="flex" v-if="$authStore().isLoggedIn">
+      {{ $authStore().getUser?.email }}
+      <button class="btn btn-outline btn-error ml-4" @click="$auth().logOut(true)">Log out</button>
+    </div>
   </div>
 </template>
 
@@ -18,6 +36,11 @@ import NavigationDrawer from '@/components/layouts/common/layouts-common-navigat
 export default {
   name: 'common-header',
   components: { NavigationDrawer },
+  computed: {
+    user() {
+      return this.$authStore().getUser
+    },
+  },
 }
 </script>
 

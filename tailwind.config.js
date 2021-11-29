@@ -6,7 +6,7 @@ module.exports = {
     './plugins/**/*.{js,ts}',
     './nuxt.config.{js,ts}',
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     container: {
       center: true,
@@ -15,5 +15,17 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/forms'), require('daisyui')],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/line-clamp'),
+    require('daisyui'),
+  ],
+  daisyui: {
+    styled: true,
+    themes: ['light'],
+    base: false,
+    utils: true,
+    logs: true,
+    rtl: false,
+  },
 }

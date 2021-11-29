@@ -1,14 +1,21 @@
 <template>
-  <div class="w-full" data-theme="corporate">
+  <div class="w-full">
     <commonHeader />
     <slot />
   </div>
 </template>
 
+<script setup>
+import { onBeforeMount } from 'vue'
+const { $auth } = useNuxtApp()
+onBeforeMount(() => {
+  $auth().isLoggedIn()
+  $auth().user()
+})
+</script>
+
 <script>
-import { general_store } from '@/stores/general'
 import commonHeader from '@/components/layouts/common/layouts-common-header.vue'
-import commonOverlay from '@/components/layouts/common/layouts-common-overlay.vue'
 export default {
   name: 'base-layout',
   components: { commonHeader },

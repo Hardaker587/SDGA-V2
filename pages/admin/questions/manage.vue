@@ -26,7 +26,7 @@
         v-slot="{ open }"
       >
         <DisclosureButton
-          class="flex justify-between w-full p-4 font-medium text-left mb-4"
+          class="flex justify-between w-full p-4 font-medium text-left mb-2 text-white"
           :style="`background: ${goal?.color}`"
         >
           <span>{{ category.sortOrder }}. {{ category.title }}</span>
@@ -35,7 +35,7 @@
             class="w-5 h-5"
           />
         </DisclosureButton>
-        <DisclosurePanel class="px-4 pt-4 pb-2">
+        <DisclosurePanel class="px-4 pb-2">
           <div
             v-for="question in filterQuestions(category.id)"
             :key="question.id"

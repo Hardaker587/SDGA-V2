@@ -5,7 +5,7 @@
       <div class="card shadow-lg">
         <div class="card-body">
           <h2 class="card-title">Total surveys completed</h2>
-          <p>{{ getResponsesCount() }}</p>
+          <p>{{ responsesCount || 0 }}</p>
         </div>
       </div>
       <div class="card shadow-lg">
@@ -17,13 +17,13 @@
       <div class="card shadow-lg">
         <div class="card-body">
           <h2 class="card-title">Total questions</h2>
-          <p>000</p>
+          <p>{{ questionsCount || 0 }}</p>
         </div>
       </div>
       <div class="card shadow-lg">
         <div class="card-body">
           <h2 class="card-title">Total users</h2>
-          <p>000</p>
+          <p>{{ userCount || 0 }}</p>
         </div>
       </div>
     </div>
@@ -66,22 +66,45 @@ import {
   AnnotationIcon,
 } from '@heroicons/vue/solid'
 export default {
+  data: () => ({
+    responsesCount: 0,
+    questionsCount: 0,
+    userCount: 0,
+  }),
   components: {
     UserCircleIcon,
     QuestionMarkCircleIcon,
     DocumentReportIcon,
     AnnotationIcon,
   },
+  async mounted() {
+    await Promise.all([
+      this.getResponsesCount(),
+      this.getQuestionsCount(),
+      this.getUserCount(),
+    ])
+  },
   methods: {
     async getResponsesCount() {
-      let count = 0
       await this.$database()
         .findAll('surveyResponses')
         .then((res) => {
-          count = Object.keys(res).length
+          this.responsesCount = Object.keys(res).length
         })
-      console.log(count)
-      return count
+    },
+    async getQuestionsCount() {
+      await this.$database()
+        .findAll('survey')
+        .then((res) => {
+          this.questionsCount = Object.keys(res).length
+        })
+    },
+    async getUserCount() {
+      await this.$database()
+        .findAll('users')
+        .then((res) => {
+          this.userCount = Object.keys(res).length
+        })
     },
   },
 }

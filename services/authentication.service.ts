@@ -2,21 +2,27 @@ import { FirebaseService } from './firebase.service'
 import { AuthenticationInterface } from '../interfaces/authentication/Authentication.Interface'
 import { UpdateProfileInterface } from '../interfaces/authentication/UpdateProfile.Interface'
 
+// store
+import { auth_store } from '@/stores/auth'
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
   onAuthStateChanged,
+  signOut,
   User,
 } from 'firebase/auth'
 
 export class AuthenticationService extends FirebaseService {
-  public login({
-    email,
-    password,
-  }: AuthenticationInterface): Promise<void | User> {
+  public login(
+    { email, password }: AuthenticationInterface,
+    callback
+  ): Promise<void | User> {
     return signInWithEmailAndPassword(this.auth(), email, password)
-      .then((userCredential) => userCredential.user)
+      .then((userCredential) => {
+        if (userCredential.user) return callback()
+      })
       .catch((error) => {
         const errorCode = error.code
         const errorMessage = error.message
@@ -37,17 +43,34 @@ export class AuthenticationService extends FirebaseService {
       })
   }
 
-  public async isLoggedIn() {
-    return new Promise((resolve, reject) => {
-      onAuthStateChanged(this.auth(), (user) => {
-        resolve(!!user)
-      })
+  public logOut(redirect: boolean, redirectUrl?: string) {
+    auth_store().set_user(null)
+    auth_store().set_isLogged_in_status(false)
+    return signOut(this.auth()).then(() => {
+      if (redirect) document.location.href = redirectUrl ? redirectUrl : '/'
     })
   }
 
-  public user(): User | null {
-    // @ts-ignore
-    return this.isLoggedIn() ? this.auth().currentUser : null
+  public async isLoggedIn() {
+    new Promise((resolve, reject) => {
+      onAuthStateChanged(this.auth(), (user) => {
+        resolve(!!user)
+      })
+    }).then((user) => {
+      auth_store().set_isLogged_in_status(!!user)
+    })
+    return auth_store().isLoggedIn
+  }
+
+  public async user() {
+    new Promise((resolve, reject) => {
+      onAuthStateChanged(this.auth(), (user) => {
+        resolve(user)
+      })
+    }).then((user) => {
+      auth_store().set_user(user)
+    })
+    return auth_store().getUser
   }
 
   public updateProfile({ displayName, photoURL }: UpdateProfileInterface) {

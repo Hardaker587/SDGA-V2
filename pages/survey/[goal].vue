@@ -1,3 +1,6 @@
+<script setup>
+authMiddleware()
+</script>
 <template>
   <commonLoader v-if="loading" :active="loading" />
   <div v-else class="p-4">
@@ -51,7 +54,7 @@ export default {
     surveyGoal: null,
     surveyCategories: null,
     surveyQuestions: null,
-    loading: true
+    loading: true,
   }),
   mounted() {
     this.goal()
@@ -72,7 +75,10 @@ export default {
           this.question(id)
           this.loading = false
         })
-        .catch((e) => console.error(e))
+        .catch((e) => {
+          this.loading = false
+          console.error(e)
+        })
     },
     async category(key) {
       await this.$database()

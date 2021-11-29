@@ -1,17 +1,17 @@
 <template>
-  <div class="flex flex-col md:flex-row space-x-4 md: h-screen items-center">
-    <div class="flex md:flex-1 justify-center">
+  <div class="flex flex-col md:flex-row md:space-x-4 md:h-screen items-center">
+    <div class="flex flex-1 justify-center md:mb-0 mb-4">
       <img
         src="/images/branding/main-logo.svg"
         id="main_logo"
         alt="social development goals"
       />
     </div>
-    <div class="flex-1">
+    <div class="flex flex-col flex-1 items-center">
       <h1 class="text-2xl font-black">
         Sustainable Development Goals Assessment Tool (SDGs AT)
       </h1>
-      <p>
+      <p class="mb-4" :class="clamped ? 'line-clamp-6' : 'line-clamp-none'">
         The 2030 Agenda for Sustainable Development Goals (SDGs), adopted by all
         United Nations Member States in 2015, provides a shared blueprint for
         peace, prosperity and partnerships for people and the planet, now and
@@ -30,6 +30,9 @@
         achieving SDGs. A Manual on the SDGs AT will assist to navigate the
         assessment tool.
       </p>
+      <button class="btn btn-sm bg-base-300 text-black outline-none hover:text-white" @click="clamped = !clamped">
+        {{ clamped ? 'Show more' : 'Show less' }}
+      </button>
     </div>
   </div>
 </template>
@@ -37,6 +40,9 @@
 <script>
 export default {
   name: 'index',
+  data: () => ({
+    clamped: true,
+  }),
 }
 </script>
 
@@ -52,6 +58,8 @@ export default {
   -moz-animation-timing-function: linear;
   max-width: 500px;
   max-height: 500px;
+  min-width: 150px;
+  min-height: 150px;
 }
 
 @-webkit-keyframes rotate {
