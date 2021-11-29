@@ -20,7 +20,7 @@ export class FirebaseService {
   }
 
   public firebaseInstance() {
-    if(process !== undefined) process.env = this.config
+    // if(process !== undefined) process.env = this.config
     return !getApps().length ? initializeApp(this.configuration) : getApps()[0]
   }
 
