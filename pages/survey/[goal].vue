@@ -3,32 +3,51 @@ await authMiddleware()
 </script>
 <template>
   <commonLoader v-if="loading" :active="loading" />
-  <div v-else class="p-4">
-    <div class="flex items-center mb-4">
-      <img
-        class="goal_image mr-4"
-        :src="`/images/goals/Goal_${$route.params.goal}.svg`"
-        alt=""
-      />
-      <h1 class="text-2xl font-black mb-4">
-        {{ surveyGoal?.title }}
-      </h1>
-      <div
-        class="btn btn-primary"
-        v-if="$route.params.goal !== '1'"
-        @click="$router.push(`/survey/${--$route.params.goal}`)"
-      >
-        Previous
+  <div v-else>
+    <div
+      class="
+        flex flex-col
+        md:flex-row
+        items-center
+        justify-space-between
+        p-2
+        md:py-4
+        mb-4
+        sticky
+        align-self
+        top-16
+        text-white
+      "
+      :style="`background-color: ${surveyGoal?.color}`"
+    >
+      <div class="flex flex-1 items-center">
+        <img
+          class="goal_image mr-4"
+          :src="`/images/goals/Goal_${$route.params.goal}.svg`"
+          alt=""
+        />
+        <h1 class="md:text-2xl font-black">
+          {{ surveyGoal?.title }}
+        </h1>
       </div>
-      <div
-        class="btn btn-primary"
-        v-if="$route.params.goal !== '16'"
-        @click="$router.replace({ path: `/survey/${++$route.params.goal}` })"
-      >
-        Next
+      <div class="flex">
+        <div
+          class="btn btn-primary mr-4 btn-sm md:btn-md"
+          v-if="$route.params.goal !== '1'"
+          @click="$router.push(`/survey/${--$route.params.goal}`)"
+        >
+          Previous
+        </div>
+        <div
+          class="btn btn-primary btn-sm md:btn-md"
+          v-if="$route.params.goal !== '16'"
+          @click="$router.replace({ path: `/survey/${++$route.params.goal}` })"
+        >
+          Next
+        </div>
       </div>
     </div>
-    <div v-for="surveyCategory in surveyCategories" :key="surveyCategory.id">
+    <div v-for="surveyCategory in surveyCategories" :key="surveyCategory.id" class="px-4">
       <div class="text-xl font-bold underline mb-4">
         {{ surveyCategory?.title }}
       </div>

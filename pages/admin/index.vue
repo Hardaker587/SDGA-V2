@@ -1,3 +1,7 @@
+<script setup>
+await adminMiddleware()
+</script>
+
 <template>
   <div>
     <h1 class="text-2xl font-black mb-4">General overview</h1>

@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aa20f58f-694b-42c3-b814-d5c66bb78114" name="Default Changelist" comment="" />
+    <list default="true" id="aa20f58f-694b-42c3-b814-d5c66bb78114" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/layouts/common/layouts-common-base.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/layouts/common/layouts-common-base.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/layouts/common/layouts-common-header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/layouts/common/layouts-common-header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/survey/survey-question.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/survey/survey-question.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enums/survey-selections.enum.ts" beforeDir="false" afterPath="$PROJECT_DIR$/enums/survey-selections.enum.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/admin/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/admin/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/survey/[goal].vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/survey/[goal].vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/authentication.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/authentication.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stores/auth/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/stores/auth/index.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +26,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="21KeUYTamE34LsQrN01Vymh2F3e" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -23,6 +38,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="yarn" />
@@ -66,6 +82,7 @@
       <workItem from="1637780368591" duration="9004000" />
       <workItem from="1637860104420" duration="5942000" />
       <workItem from="1637924209780" duration="1358000" />
+      <workItem from="1638277310592" duration="1189000" />
     </task>
     <servers />
   </component>

@@ -8,6 +8,7 @@
         class="header-logo"
         src="/images/branding/sustainable-development.svg"
         alt=""
+        @click="$router.replace($authStore().isLoggedIn ? '/survey/1' : '/')"
       />
     </div>
     <div class="flex" v-if="!$authStore().isLoggedIn">
@@ -25,8 +26,22 @@
       </button>
     </div>
     <div class="flex" v-if="$authStore().isLoggedIn">
-      {{ $authStore().getUser?.email }}
-      <button class="btn btn-outline btn-error ml-4" @click="$auth().logOut(true)">Log out</button>
+      <span class="hidden md:block">
+        {{ $authStore().getUser?.email }}
+      </span>
+      <button
+        v-if="$authStore().getclaims?.admin"
+        class="btn btn-outline btn-error ml-4"
+        @click="$router.replace('/admin')"
+      >
+        Dashboard
+      </button>
+      <button
+        class="btn btn-outline btn-error ml-4"
+        @click="$auth().logOut(true)"
+      >
+        Log out
+      </button>
     </div>
   </div>
 </template>
@@ -46,7 +61,7 @@ export default {
 
 <style scoped>
 .header-logo {
-  max-height: 45px;
+  max-height: 30px;
   width: auto;
 }
 </style>

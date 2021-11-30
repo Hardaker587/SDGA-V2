@@ -4,12 +4,14 @@ export const auth_store = defineStore('auth_store', {
   state: () => ({
     loggedIn: false,
     user: null,
+    claims: null,
   }),
   getters: {
     isLoggedIn: (state) => state.loggedIn,
     getUser: (state) => {
       return { ...state.user }
     },
+    getclaims: (state) => state.claims,
   },
   actions: {
     set_isLogged_in_status(status: boolean) {
@@ -17,6 +19,9 @@ export const auth_store = defineStore('auth_store', {
     },
     set_user(user: object) {
       this.user = user
+    },
+    set_claims(claims: object) {
+      this.claims = claims
     },
   },
 })

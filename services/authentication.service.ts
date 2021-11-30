@@ -66,6 +66,23 @@ export class AuthenticationService extends FirebaseService {
     return auth_store().isLoggedIn
   }
 
+  public async returnClaims() {
+    await new Promise((resolve, reject) => {
+      onAuthStateChanged(this.auth(), async (user) => {
+        if (user) {
+          console.log({ user })
+          await user.getIdTokenResult().then(({ claims }) => {
+            console.log({ claims })
+            resolve(claims)
+          })
+        }
+      })
+    }).then((claims) => {
+      auth_store().set_claims(claims)
+    })
+    return auth_store().getclaims
+  }
+
   public async user() {
     new Promise((resolve, reject) => {
       onAuthStateChanged(this.auth(), (user) => {

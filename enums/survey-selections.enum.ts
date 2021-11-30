@@ -7,12 +7,18 @@ export enum SurveySelectionsEnum {
   AGreatDeal = 4,
 }
 
-const GenerateSurveySelections = new Map<any, string>([
-  [SurveySelectionsEnum.X, 'X'],
+export const GenerateSurveySelections = new Map<any, string>([
+  [SurveySelectionsEnum.X, 'Don\'t know'],
   [SurveySelectionsEnum.None, 'None'],
   [SurveySelectionsEnum.ALittle, 'A Little'],
   [SurveySelectionsEnum.Adequate, 'Adequate'],
   [SurveySelectionsEnum.AGreatDeal, 'A Great Deal'],
 ])
 
-export default GenerateSurveySelections
+export const ReturnAllSurveySelections = () => {
+  const output = []
+  for (const [key, value] of GenerateSurveySelections) {
+    output.push({ key, value })
+  }
+  return output
+}

@@ -11,6 +11,7 @@ const { $auth } = useNuxtApp()
 onBeforeMount(() => {
   $auth().isLoggedIn()
   $auth().user()
+  $auth().returnClaims()
 })
 </script>
 
