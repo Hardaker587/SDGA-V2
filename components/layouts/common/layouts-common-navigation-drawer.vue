@@ -31,7 +31,6 @@
         left-0
         w-64
         bg-white
-        text-black
         fixed
         h-full
         overflow-auto
@@ -53,23 +52,15 @@
         />
         <XIcon class="w-4" @click="isOpen = false" />
       </span>
-      <span
-        @click="isOpen = false"
+      <div
+        v-for="navigationItem in navigationItems"
+        :key="navigationItem.title"
         class="flex items-center p-4 hover:bg-indigo-500 hover:text-white"
+        @click="navigate(navigationItem.route)"
       >
-        <HomeIcon class="w-6 mr-4" />
-        <span>Home</span>
-      </span>
-      <span
-        @click="
-          [$router.push('/admin/questions/'),
-          isOpen = false]
-        "
-        class="flex items-center p-4 hover:bg-indigo-500 hover:text-white"
-      >
-        <QuestionMarkCircleIcon class="w-6 mr-4" />
-        <span>Questions</span>
-      </span>
+        <component :is="navigationItem.icon" class="w-6 mr-4" />
+        <span>{{ navigationItem.title }}</span>
+      </div>
     </aside>
   </div>
 </template>
@@ -80,18 +71,55 @@ import {
   HomeIcon,
   XIcon,
   QuestionMarkCircleIcon,
+  DocumentReportIcon,
+  AnnotationIcon,
+  UserCircleIcon,
 } from '@heroicons/vue/solid'
 export default {
   name: 'layouts-common-navigation-drawer',
-  components: { MenuIcon, HomeIcon, XIcon, QuestionMarkCircleIcon },
-  data() {
-    return {
-      isOpen: false,
-    }
+  components: {
+    MenuIcon,
+    HomeIcon,
+    XIcon,
+    QuestionMarkCircleIcon,
+    DocumentReportIcon,
+    AnnotationIcon,
+    UserCircleIcon,
   },
+  data: () => ({
+    isOpen: false,
+    navigationItems: [
+      { title: 'Home', icon: HomeIcon, route: '/' },
+      { title: 'Survey', icon: HomeIcon, route: '/survey/1' },
+      {
+        title: 'Questions',
+        icon: QuestionMarkCircleIcon,
+        route: '/admin/questions',
+      },
+      {
+        title: 'Reports',
+        icon: DocumentReportIcon,
+        route: '/admin/reports',
+      },
+      {
+        title: 'Responses',
+        icon: AnnotationIcon,
+        route: '/admin/responses',
+      },
+      {
+        title: 'Users',
+        icon: UserCircleIcon,
+        route: '/admin/users',
+      },
+    ],
+  }),
   methods: {
     drawer() {
       this.isOpen = !this.isOpen
+    },
+    navigate(route) {
+      this.drawer()
+      this.$router.push(route)
     },
   },
   watch: {

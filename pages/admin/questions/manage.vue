@@ -95,31 +95,32 @@ export default {
         .then((res) => (this.goal = res))
     },
     async fetchCategories(goalId) {
-      return await this.$firestore()
+      console.log('categories')
+      await this.$firestore()
         .queryDocuments('categories', {
           key: 'goal',
           operator: '==',
           value: goalId,
         })
-        .then(
-          (res) =>
-            (this.categories = res.sort((a, b) => a.sortOrder > b.sortOrder))
-        )
+        .then((res) => {
+          this.categories = res.sort((a, b) => a.sortOrder > b.sortOrder)
+        })
     },
     async fetchQuestions(goalId) {
-      return await this.$firestore()
+      console.log('questions')
+      await this.$firestore()
         .queryDocuments('questions', {
           key: 'goal',
           operator: '==',
           value: goalId,
         })
-        .then(
-          (res) =>
-            (this.questions = res.sort((a, b) => a.sortOrder > b.sortOrder))
-        )
+        .then((res) => {
+          console.log(res)
+          this.questions = res.sort((a, b) => a.sortOrder > b.sortOrder)
+        })
     },
     filterQuestions(id) {
-      return this.surveyQuestions?.filter(
+      return this.questions?.filter(
         (question) => question.goalCategory === id
       )
     },

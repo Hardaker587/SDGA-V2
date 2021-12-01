@@ -1,13 +1,14 @@
 <template>
-  <div class="flex flex-col md:grid grid-cols-2 gap-4 space-x-4 mb-4">
-    <div class="flex-1">{{ sortOrder }}. {{ title }}</div>
-    <div class="grid grid-cols-5 gap-4">
+  <div class="flex flex-col mb-4">
+    <div class="flex-1 mb-1">{{ sortOrder }}. {{ title }}</div>
+    <div class="grid md:grid-cols-5 md:gap-4">
       <div
         v-for="selection in selections"
         :key="selection"
-        class="flex flex-col items-center"
+        class="flex md:flex-col items-center p-1"
+        :class="highlightSelection(selection.key)"
       >
-        <input v-model="chosenSelection" :value="selection.key" type="radio" />
+        <input v-model="chosenSelection" :value="selection.key" type="radio" class="sm:mr-2 md:mb-1"/>
         <div class="mt-1 text-xs">{{ selection.value }}</div>
       </div>
     </div>
@@ -35,6 +36,11 @@ export default {
         output.push({ key, value })
       }
       return output
+    },
+  },
+  methods: {
+    highlightSelection(selection) {
+      if (selection === this.chosenSelection) return 'bg-primary rounded-box text-white'
     },
   },
 }

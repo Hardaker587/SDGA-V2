@@ -3,7 +3,7 @@ await authMiddleware()
 </script>
 <template>
   <commonLoader v-if="loading" :active="loading" />
-  <div v-else>
+  <div v-else class="md:w-8/12 mx-auto bg-white md:shadow-lg pb-2">
     <div
       class="
         flex flex-col
