@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col mb-4">
     <div class="flex-1 mb-1">{{ title }}</div>
-    <div class="grid md:grid-cols-5 md:gap-4">
+    <div class="grid md:grid-cols-6 md:gap-2">
       <div
         v-for="selection in selections"
         :key="selection"

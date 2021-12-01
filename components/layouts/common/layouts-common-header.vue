@@ -26,9 +26,12 @@
       </button>
     </div>
     <div class="flex" v-if="$authStore().isLoggedIn">
-      <span class="hidden md:block">
-        {{ $authStore().getUser?.email }}
-      </span>
+      <div class="hidden md:block">
+        <div class="flex flex-col items-end">
+          <div class="text-sm">Welcome back</div>
+          <div class="text-sm font-black">{{ $authStore().getUser?.email }}</div>
+        </div>
+      </div>
       <button
         v-if="$authStore().getclaims?.admin"
         class="btn btn-error ml-2 btn-sm md:btn-md"
