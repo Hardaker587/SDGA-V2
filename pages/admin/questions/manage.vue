@@ -1,5 +1,5 @@
 <template>
-  <div class="md:w-7/12 mx-auto md:px-4">
+  <div class="md:w-8/12 mx-auto md:px-4">
     <commonLoader v-if="loading" :active="loading" />
     <div class="flex items-center my-4">
       <button

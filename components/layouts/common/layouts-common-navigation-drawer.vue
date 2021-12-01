@@ -74,6 +74,7 @@ import {
   DocumentReportIcon,
   AnnotationIcon,
   UserCircleIcon,
+  ClipboardListIcon,
 } from '@heroicons/vue/solid'
 export default {
   name: 'layouts-common-navigation-drawer',
@@ -85,12 +86,13 @@ export default {
     DocumentReportIcon,
     AnnotationIcon,
     UserCircleIcon,
+    ClipboardListIcon,
   },
   data: () => ({
     isOpen: false,
     navigationItems: [
       { title: 'Home', icon: HomeIcon, route: '/' },
-      { title: 'Survey', icon: HomeIcon, route: '/survey/1' },
+      { title: 'Survey', icon: ClipboardListIcon, route: '/survey/1' },
       {
         title: 'Questions',
         icon: QuestionMarkCircleIcon,

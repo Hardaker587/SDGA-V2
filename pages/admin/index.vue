@@ -46,7 +46,7 @@ await adminMiddleware()
           <h2 class="card-title">View Reports</h2>
         </div>
       </div>
-      <div class="card shadow-lg">
+      <div class="card shadow-lg" @click="$router.push('/admin/responses')">
         <div class="card-body text-center">
           <AnnotationIcon class="h-24 mb-4" />
           <h2 class="card-title">View Responses</h2>

@@ -40,12 +40,18 @@ await authMiddleware()
         </div>
         <div
           class="btn btn-primary btn-sm md:btn-md"
+          :class="
+            !continueNextEnabled
+              ? 'btn-disabled bg-gray-200 border-gray-200'
+              : ''
+          "
           v-if="$route.params.goal !== '16'"
           @click="$router.replace({ path: `/survey/${++$route.params.goal}` })"
         >
           Next
         </div>
         <div
+          v-if="$route.params.goal !== '16' && canSubmit"
           class="btn btn-success btn-sm md:btn-md"
           @click="submitResponses()"
         >
@@ -88,6 +94,20 @@ export default {
     surveyQuestions: null,
     loading: true,
   }),
+  computed: {
+    continueNextEnabled() {
+      const completedQuestions = this.$surveyStore().get_survey_user_selections
+      const completedQuestionsForGoal = completedQuestions.filter(
+        (question) => question.goalId === this.surveyGoal.id
+      )
+      return this.surveyQuestions.length === completedQuestionsForGoal.length
+    },
+    canSubmit() {
+      const completedQuestions = this.$surveyStore().get_survey_user_selections
+      const surveyLength = this.$firestore().documentCount('questions')
+      return completedQuestions.length === surveyLength.length
+    },
+  },
   mounted() {
     this.initiatePage()
   },
