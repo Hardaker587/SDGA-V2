@@ -3,7 +3,7 @@ await adminMiddleware()
 </script>
 
 <template>
-  <div>
+  <div class="md:w-10/12 mx-auto">
     <h1 class="text-2xl font-black mb-4">General overview</h1>
     <div class="grid grid-cols-2 gap-4 md:grid-cols-4 mb-4">
       <div class="card shadow-lg">
@@ -15,7 +15,7 @@ await adminMiddleware()
       <div class="card shadow-lg">
         <div class="card-body">
           <h2 class="card-title">Surveys completed today</h2>
-          <p>000</p>
+          <p>{{ todaysResponsesCount || 0 }}</p>
         </div>
       </div>
       <div class="card shadow-lg">
@@ -34,7 +34,7 @@ await adminMiddleware()
     <hr class="mb-4" />
     <h1 class="text-2xl font-black mb-4">Navigation</h1>
     <div class="grid grid-cols-2 gap-4 md:grid-cols-4 mb-4">
-      <div class="card shadow-lg">
+      <div class="card shadow-lg" @click="$router.push('/admin/questions')">
         <div class="card-body text-center">
           <QuestionMarkCircleIcon class="h-24 mb-4" />
           <h2 class="card-title">Manage Questions</h2>
@@ -72,6 +72,7 @@ import {
 export default {
   data: () => ({
     responsesCount: 0,
+    todaysResponsesCount: 0,
     questionsCount: 0,
     userCount: 0,
   }),
@@ -84,6 +85,7 @@ export default {
   async mounted() {
     await Promise.all([
       this.getResponsesCount(),
+      this.getTodaysResponseCount(),
       this.getQuestionsCount(),
       this.getUserCount(),
     ])
@@ -103,6 +105,16 @@ export default {
       this.$firestore()
         .documentCount('users')
         .then((res) => (this.userCount = res))
+    },
+    async getTodaysResponseCount() {
+      const date = new Date().toLocaleDateString()
+      this.$firestore()
+        .queryDocuments('responses', {
+          key: 'submission.date',
+          operator: '==',
+          value: date,
+        })
+        .then((res) => (this.todaysResponsesCount = res.length))
     },
   },
 }

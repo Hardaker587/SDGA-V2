@@ -13,6 +13,7 @@
           :value="selection.key"
           type="radio"
           class="mr-2 md:mb-1 md:mr-0"
+          @click="addSelection(selection)"
         />
         <div class="md:mt-1 text-xs">{{ selection.value }}</div>
       </div>
@@ -47,6 +48,15 @@ export default {
     highlightSelection(selection) {
       if (selection === this.chosenSelection)
         return 'bg-primary rounded-box text-white'
+    },
+    addSelection(selection) {
+      this.$surveyStore().set_survey_user_selections({
+        questionId: this.question,
+        categoryId: this.category,
+        goalId: this.goal,
+        questionTitle: this.title,
+        ...selection,
+      })
     },
   },
 }

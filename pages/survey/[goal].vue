@@ -45,31 +45,40 @@ await authMiddleware()
         >
           Next
         </div>
+        <div
+          class="btn btn-success btn-sm md:btn-md"
+          @click="submitResponses()"
+        >
+          Submit
+        </div>
       </div>
     </div>
-    <div
-      v-for="surveyCategory in surveyCategories"
-      :key="surveyCategory.id"
-      class="px-4"
-    >
-      <div class="text-lg font-bold underline mb-4">
-        {{ surveyCategory?.title }}
+    <form>
+      <div
+        v-for="surveyCategory in surveyCategories"
+        :key="surveyCategory.id"
+        class="px-4"
+      >
+        <div class="text-lg font-bold underline mb-4">
+          {{ surveyCategory?.title }}
+        </div>
+        <surveyQuestion
+          v-for="question in filterQuestions(surveyCategory.id)"
+          :key="question.id"
+          :goal="surveyGoal.id"
+          :category="surveyCategory.id"
+          :question="question.id"
+          :title="question.question"
+          :sortOrder="String(question.sortOrder)"
+        />
       </div>
-      <surveyQuestion
-        v-for="question in filterQuestions(surveyCategory.id)"
-        :key="question.id"
-        :goal="surveyGoal.id"
-        :category="surveyCategory.id"
-        :question="question.id"
-        :title="question.question"
-        :sortOrder="String(question.sortOrder)"
-      />
-    </div>
+    </form>
   </div>
 </template>
 <script>
 import surveyQuestion from '@/components/survey/survey-question.vue'
 import commonLoader from '@/components/layouts/common/layouts-common-overlay.vue'
+import { uuid } from '../../utilities/uuid'
 export default {
   components: { surveyQuestion, commonLoader },
   name: '[goal]',
@@ -127,6 +136,19 @@ export default {
       return this.surveyQuestions?.filter(
         (question) => question.goalCategory === id
       )
+    },
+    submitResponses() {
+      const date = new Date().toLocaleDateString()
+      const time = new Date().toLocaleTimeString()
+      const submission = { date, time }
+
+      const user = this.$authStore().getUser
+
+      this.$firestore().addDocument('responses', uuid(), {
+        user: { email: user.email, uid: user.uid },
+        submission,
+        responses: this.$surveyStore().get_survey_user_selections,
+      })
     },
   },
 }
