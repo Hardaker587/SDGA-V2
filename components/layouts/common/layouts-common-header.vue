@@ -13,13 +13,13 @@
     </div>
     <div class="flex" v-if="!$authStore().isLoggedIn">
       <button
-        class="btn btn-primary mr-2"
+        class="btn btn-primary mr-2 btn-sm md:btn-md"
         @click="$router.replace('/account/login')"
       >
         Login
       </button>
       <button
-        class="btn btn-outline btn-primary"
+        class="btn btn-outline btn-primary btn-sm md:btn-md"
         @click="$router.replace('/account/sign-up')"
       >
         Sign up
@@ -31,13 +31,13 @@
       </span>
       <button
         v-if="$authStore().getclaims?.admin"
-        class="btn btn-outline btn-error ml-4"
+        class="btn btn-error ml-2 btn-sm md:btn-md"
         @click="$router.replace('/admin')"
       >
         Dashboard
       </button>
       <button
-        class="btn btn-outline btn-error ml-4"
+        class="btn btn-outline btn-error ml-2 btn-sm md:btn-md"
         @click="$auth().logOut(true)"
       >
         Log out

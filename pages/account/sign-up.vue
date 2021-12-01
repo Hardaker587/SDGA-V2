@@ -1,5 +1,11 @@
 <template>
-  <div class="flex flex-col md:flex-row md:space-x-4 md:h-screen items-center">
+  <div
+    class="
+      flex flex-col-reverse
+      md:flex-row md:space-x-4 md:h-screen
+      items-center
+    "
+  >
     <div
       class="
         flex flex-1 flex-col
@@ -9,10 +15,10 @@
         mb-4
       "
     >
-      <div class="text-2xl font-black w-7/12 text-left">
+      <div class="text-2xl font-black w-full md:w-7/12 text-left">
         Sign up for an account
       </div>
-      <div class="form-control w-7/12">
+      <div class="form-control w-full md:w-7/12">
         <label class="label">
           <span class="label-text">Email address</span>
         </label>
@@ -23,7 +29,7 @@
           type="text"
         />
       </div>
-      <div class="form-control w-7/12">
+      <div class="form-control w-full md:w-7/12">
         <label class="label">
           <span class="label-text">Password</span>
         </label>
@@ -45,7 +51,9 @@
           </button>
         </div>
       </div>
-      <button class="btn btn-primary w-7/12 mt-4" @click="signUp()">Sign up</button>
+      <button class="btn btn-primary w-full md:w-7/12 mt-4" @click="signUp()">
+        Sign up
+      </button>
     </div>
     <div class="flex flex-1 justify-center md:mb-0 mb-4">
       <div class="flex flex-1 justify-center md:mb-0 mb-4">
@@ -96,6 +104,8 @@ export default {
   -moz-animation-timing-function: linear;
   max-width: 500px;
   max-height: 500px;
+  min-width: 150px;
+  min-height: 150px;
 }
 
 @-webkit-keyframes rotate {

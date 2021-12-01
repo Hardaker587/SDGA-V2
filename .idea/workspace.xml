@@ -2,15 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aa20f58f-694b-42c3-b814-d5c66bb78114" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/admin/reports/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/admin/responses/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/admin/users/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/i18nally.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/css/base.styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/tailwind.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/tailwind.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/layouts/common/layouts-common-base.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/layouts/common/layouts-common-base.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/layouts/common/layouts-common-navigation-drawer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/layouts/common/layouts-common-navigation-drawer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/layouts/common/layouts-common-header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/layouts/common/layouts-common-header.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/survey/survey-question.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/survey/survey-question.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/nuxt.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/account/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/account/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/account/sign-up.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/account/sign-up.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/admin/questions/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/admin/questions/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/admin/questions/manage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/admin/questions/manage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/survey/[goal].vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/survey/[goal].vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,6 +28,7 @@
       <list>
         <option value="TypeScript File" />
         <option value="Vue Single File Component" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -33,17 +39,19 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="ts.external.directory.path" value="$PROJECT_DIR$/functions/node_modules/typescript/lib" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -67,6 +75,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -84,36 +93,22 @@
       <workItem from="1637924209780" duration="1358000" />
       <workItem from="1638277310592" duration="1368000" />
       <workItem from="1638299588481" duration="3352000" />
+      <workItem from="1638328561118" duration="2780000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="578" y="288" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1637779534307">
-      <screen x="0" y="25" width="1680" height="1025" />
-    </state>
-    <state x="578" y="288" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1680.1025@0.25.1680.1025" timestamp="1637779534307" />
-    <state width="1638" height="258" key="GridCell.Tab.0.bottom" timestamp="1638301718275">
-      <screen x="0" y="25" width="1680" height="1025" />
-    </state>
-    <state width="1638" height="258" key="GridCell.Tab.0.bottom/0.25.1680.1025@0.25.1680.1025" timestamp="1638301718275" />
-    <state width="1638" height="258" key="GridCell.Tab.0.center" timestamp="1638301718274">
-      <screen x="0" y="25" width="1680" height="1025" />
-    </state>
-    <state width="1638" height="258" key="GridCell.Tab.0.center/0.25.1680.1025@0.25.1680.1025" timestamp="1638301718274" />
-    <state width="1638" height="258" key="GridCell.Tab.0.left" timestamp="1638301718273">
-      <screen x="0" y="25" width="1680" height="1025" />
-    </state>
-    <state width="1638" height="258" key="GridCell.Tab.0.left/0.25.1680.1025@0.25.1680.1025" timestamp="1638301718273" />
-    <state width="1638" height="258" key="GridCell.Tab.0.right" timestamp="1638301718274">
-      <screen x="0" y="25" width="1680" height="1025" />
-    </state>
-    <state width="1638" height="258" key="GridCell.Tab.0.right/0.25.1680.1025@0.25.1680.1025" timestamp="1638301718274" />
-    <state x="493" y="278" width="848" height="582" key="find.popup" timestamp="1637870140827">
-      <screen x="0" y="25" width="1680" height="1025" />
-    </state>
-    <state x="493" y="278" width="848" height="582" key="find.popup/0.25.1680.1025@0.25.1680.1025" timestamp="1637870140827" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

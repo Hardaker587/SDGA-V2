@@ -1,15 +1,15 @@
 <template>
-  <div
-    :style="`background: ${currentColor}; transition: ease all 0.9s`"
-    class="p-4 rounded-box ease-in-out"
-  >
+  <div class="p-4 md:w-8/12 mx-auto">
     <div class="flex items-center mb-4">
-      <button class="btn btn-circle mr-4" @click="$router.push('/admin')">
+      <button class="btn btn-circle mr-4 btn-sm md:btn-md" @click="$router.push('/admin')">
         <ChevronLeftIcon class="w-8" />
       </button>
-      <h1 class="text-2xl font-black">Select a goal to proceed:</h1>
+      <h1 class="text-lg md:text-2xl font-black">Select a goal to proceed:</h1>
     </div>
-    <div v-if="goals" class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
+    <div
+      v-if="goals"
+      class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4"
+    >
       <div v-for="goal in goals" :key="goal.id">
         <img
           :src="`/images/goals/Goal_${goal.sortOrder}.svg`"

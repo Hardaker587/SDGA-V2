@@ -1,20 +1,20 @@
 <template>
-  <div class="w-full px-4">
+  <div class="md:w-7/12 mx-auto md:px-4">
     <commonLoader v-if="loading" :active="loading" />
-    <div class="flex">
+    <div class="flex items-center my-4">
       <button
-        class="btn btn-circle mr-4"
+        class="btn btn-circle btn-sm md:btn-md mr-2"
         @click="$router.push('/admin/questions/')"
       >
         <ChevronLeftIcon class="w-8" />
       </button>
-      <div class="flex items-center mb-4">
+      <div class="flex items-center">
         <img
           class="goal_image mr-4 w-12"
           :src="`/images/goals/Goal_${goal?.sortOrder}.svg`"
           alt=""
         />
-        <h1 class="text-2xl font-black">
+        <h1 class="text-lg md:text-2xl font-black">
           {{ goal?.title }}
         </h1>
       </div>

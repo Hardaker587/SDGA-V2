@@ -26,7 +26,7 @@ await authMiddleware()
           :src="`/images/goals/Goal_${$route.params.goal}.svg`"
           alt=""
         />
-        <h1 class="md:text-2xl font-black">
+        <h1 class="md:text-xl font-black">
           {{ surveyGoal?.title }}
         </h1>
       </div>
@@ -47,8 +47,12 @@ await authMiddleware()
         </div>
       </div>
     </div>
-    <div v-for="surveyCategory in surveyCategories" :key="surveyCategory.id" class="px-4">
-      <div class="text-xl font-bold underline mb-4">
+    <div
+      v-for="surveyCategory in surveyCategories"
+      :key="surveyCategory.id"
+      class="px-4"
+    >
+      <div class="text-lg font-bold underline mb-4">
         {{ surveyCategory?.title }}
       </div>
       <surveyQuestion
@@ -82,14 +86,16 @@ export default {
     async initiatePage() {
       await this.goal()
         .then(async (res) => {
-          // basically guarenteed this will always have 1 result
+          // basically guaranteed this will always have 1 result
           const topResult = res[0]
           this.surveyGoal = topResult
           await this.categories(topResult.id).then((res) => {
-            this.surveyCategories = res
+            this.surveyCategories = res.sort(
+              (a, b) => a.sortOrder > b.sortOrder
+            )
           })
           await this.questions(topResult.id).then((res) => {
-            this.surveyQuestions = res
+            this.surveyQuestions = res.sort((a, b) => a.sortOrder > b.sortOrder)
           })
         })
         .finally(() => {

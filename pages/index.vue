@@ -8,10 +8,10 @@
       />
     </div>
     <div class="flex flex-col flex-1 items-center">
-      <h1 class="text-2xl font-black">
+      <h1 class="text-2xl font-black px-6">
         Sustainable Development Goals Assessment Tool (SDGs AT)
       </h1>
-      <p class="mb-4" :class="clamped ? 'line-clamp-6' : 'line-clamp-none'">
+      <p class="mb-4 px-6" :class="clamped ? 'line-clamp-6' : 'line-clamp-none'">
         The 2030 Agenda for Sustainable Development Goals (SDGs), adopted by all
         United Nations Member States in 2015, provides a shared blueprint for
         peace, prosperity and partnerships for people and the planet, now and
