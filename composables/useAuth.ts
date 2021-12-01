@@ -8,7 +8,9 @@ export const authMiddleware = async () => {
     .isLoggedIn()
     .then(async (loggedIn) => {
       if (!loggedIn) {
-        await router.push('/account/login')
+        await router.isReady().finally(() => {
+          router.push('/account/login')
+        })
       }
     })
 }

@@ -1,3 +1,6 @@
+<script setup>
+await authMiddleware()
+</script>
 <template>
   <div
     class="
@@ -17,11 +20,11 @@
       "
     >
       <div class="text-2xl font-black w-full md:w-7/12 text-left">
-        Sign into your account
+        Add some details about you:
       </div>
       <div class="form-control w-full md:w-7/12">
         <label class="label">
-          <span class="label-text">Email address</span>
+          <span class="label-text">Display name</span>
         </label>
         <input
           v-model="email"
@@ -32,39 +35,49 @@
       </div>
       <div class="form-control w-full md:w-7/12">
         <label class="label">
-          <span class="label-text">Password</span>
+          <span class="label-text">Date of birth</span>
         </label>
-        <div class="relative">
-          <input
-            v-model="password"
-            placeholder="Password"
-            class="input input-bordered w-full pr-16"
-            :type="displayPassword ? 'text' : 'password'"
-          />
-          <button
-            class="absolute top-0 right-0 rounded-l-none btn btn-primary"
-            @click="displayPassword = !displayPassword"
-          >
-            <component
-              :is="displayPassword ? 'EyeIcon' : 'EyeOffIcon'"
-              class="w-5"
-            />
-          </button>
-        </div>
-        <label class="label">
-          <a href="#" class="label-text-alt">Forgot password?</a>
-        </label>
+        <input
+          v-model="password"
+          placeholder="Password"
+          class="input input-bordered w-full pr-16"
+        />
       </div>
-      <button
-        class="btn btn-primary w-full md:w-7/12"
-        @click="
-          ;[
-            (loading = true),
-            $auth().login({ email, password }, true, '/survey/1'),
-          ]
-        "
-      >
-        Log in
+      <div class="form-control w-full md:w-7/12">
+        <label class="label">
+          <span class="label-text">University</span>
+        </label>
+        <input
+          v-model="email"
+          placeholder="user@domain.com"
+          class="input input-bordered"
+          type="text"
+        />
+      </div>
+      <div class="form-control w-full md:w-7/12">
+        <label class="label">
+          <span class="label-text">City</span>
+        </label>
+        <input
+          v-model="email"
+          placeholder="user@domain.com"
+          class="input input-bordered"
+          type="text"
+        />
+      </div>
+      <div class="form-control w-full md:w-7/12">
+        <label class="label">
+          <span class="label-text">Province</span>
+        </label>
+        <input
+          v-model="email"
+          placeholder="user@domain.com"
+          class="input input-bordered"
+          type="text"
+        />
+      </div>
+      <button class="btn btn-primary w-full md:w-7/12 mt-4" @click="signUp()">
+        Continue to survey
       </button>
     </div>
     <div class="flex flex-1 justify-center md:mb-0 mb-4">
@@ -78,20 +91,14 @@
     </div>
   </div>
 </template>
-<script setup>
-const router = useRouter()
-</script>
+
 <script>
 import commonLoader from '@/components/layouts/common/layouts-common-overlay.vue'
-import { EyeIcon, EyeOffIcon } from '@heroicons/vue/solid'
 export default {
-  name: 'login',
-  components: { EyeIcon, EyeOffIcon, commonLoader },
+  name: 'user-details',
+  components: { commonLoader },
   data: () => ({
     loading: false,
-    email: '',
-    password: '',
-    displayPassword: false,
   }),
 }
 </script>

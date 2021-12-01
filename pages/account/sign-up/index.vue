@@ -6,6 +6,7 @@
       items-center
     "
   >
+    <commonLoader v-if="loading" :active="loading" />
     <div
       class="
         flex flex-1 flex-col
@@ -68,10 +69,12 @@
 </template>
 
 <script>
+import commonLoader from '@/components/layouts/common/layouts-common-overlay.vue'
+
 import { EyeIcon, EyeOffIcon } from '@heroicons/vue/solid'
 export default {
   name: 'login',
-  components: { EyeIcon, EyeOffIcon },
+  components: { EyeIcon, EyeOffIcon, commonLoader },
   data: () => ({
     email: '',
     password: '',
@@ -79,12 +82,13 @@ export default {
   }),
   methods: {
     signUp() {
+      this.loading = true
       return this.$auth()
         .register({ email: this.email, password: this.password })
         .then(() => {
           this.$auth().login(
             { email: this.email, password: this.password },
-            () => this.$router.push('/survey/1')
+            () => this.$router.push('/account/sign-up/user-details')
           )
         })
     },

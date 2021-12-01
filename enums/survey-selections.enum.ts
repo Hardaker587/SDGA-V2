@@ -12,6 +12,7 @@ export const GenerateSurveySelections = new Map<any, string>([
   [SurveySelectionsEnum.None, 'None'],
   [SurveySelectionsEnum.ALittle, 'A Little'],
   [SurveySelectionsEnum.Adequate, 'Adequate'],
+  [SurveySelectionsEnum.Substantial, 'Substantial'],
   [SurveySelectionsEnum.AGreatDeal, 'A Great Deal'],
 ])
 
