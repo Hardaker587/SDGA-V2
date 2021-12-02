@@ -3,7 +3,7 @@
     <div class="flex items-center mb-4">
       <button
         class="btn btn-circle mr-4 btn-sm md:btn-md"
-        @click="$router.push('/admin/reports')"
+        @click="$router.replace('/admin/reports')"
       >
         <ChevronLeftIcon class="w-8" />
       </button>
@@ -14,16 +14,18 @@
         <h1 class="text-md md:text-lg">Select data to see your chart</h1>
       </div>
     </div>
-    <button class="btn mr-4 btn-sm md:btn-md" @click="generateChart()">
-      Generate Chart
-    </button>
-    <div id="chart-view"></div>
+    <div ref="chart-view" :key="uuid()"></div>
   </div>
 </template>
 
+<script setup>
+import { uuid } from '../../../utilities/uuid'
+const chart_view = ref(null)
+</script>
 <script>
 import { ChevronLeftIcon } from '@heroicons/vue/solid'
-import ApexCharts from 'apexcharts'
+import { filterArray } from '../../../utilities/data'
+import { ReturnAllSurveySelections } from '../../../enums/survey-selections.enum'
 
 export default {
   name: '[chart]',
@@ -33,12 +35,16 @@ export default {
     questions: null,
     responses: null,
     chart: null,
+    series: null,
   }),
   components: {
     ChevronLeftIcon,
   },
-  beforeUnmount() {
-    if (this.chart) this.chart.destroy()
+  unmounted() {
+    this.$forceUpdate()
+  },
+  mounted() {
+    this.fetchResponses()
   },
   methods: {
     fetchGoals() {
@@ -56,35 +62,44 @@ export default {
         .getAllDocuments('questions')
         .then((res) => (this.questions = res))
     },
-    fetchResponses() {
-      this.$firestore()
+    async fetchResponses() {
+      await this.$firestore()
         .getAllDocuments('responses')
-        .then((res) => (this.responses = res))
+        .then((res) => {
+          // flatten data
+          const flatArray = []
+          res.forEach((response) => flatArray.push(response.responses))
+          const series = this.generateSeries('All responses', flatArray.flat())
+          this.generateChart([series], this.generateLabels())
+        })
     },
-    generateChart() {
+    generateLabels() {
+      return ReturnAllSurveySelections().map((selection) => selection.value)
+    },
+    generateSeries(name, data) {
+      const returnSeries = []
+      this.generateLabels().forEach((label) => {
+        returnSeries.push(filterArray(data, 'value', label).length)
+      })
+      return { name, data: returnSeries }
+    },
+    generateChart(series, labels) {
+      this.chart = null
       const options = {
         chart: {
           type: this.$route.params.chart,
         },
-        series: [
-          {
-            name: 'sales',
-            data: [45, 41, 45, 50, 49, 60, 70, 91, 150],
-          },
-          {
-            name: 'sales-2',
-            data: [30, 40, 45, 50, 49, 60, 70, 91, 220],
-          },
-        ],
+        series,
         xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+          categories: labels,
         },
       }
-      this.chart = new ApexCharts(
-        document.getElementById('chart-view'),
-        options
-      )
-      this.chart.render()
+      try {
+        this.chart = this.$chart(this.$refs['chart-view'], options)
+        this.chart.render()
+      } catch (e) {
+        console.error('error rendering chart', e)
+      }
     },
   },
 }
