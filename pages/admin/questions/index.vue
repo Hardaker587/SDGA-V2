@@ -14,7 +14,7 @@
         <img
           :src="`/images/goals/Goal_${goal.sortOrder}.svg`"
           alt=""
-          class="w-full h-auto hover:opacity-75"
+          class="w-full h-auto hover:opacity-75 rounded-box"
           @click="$router.push(`/admin/questions/manage?goal=${goal.id}`)"
           @mouseover="currentColor = goal.color"
           @mouseout="currentColor = '#fff'"

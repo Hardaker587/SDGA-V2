@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aa20f58f-694b-42c3-b814-d5c66bb78114" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/plugins/apex_charts.plugin.client.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utilities/data.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/admin/reports/admin-reports-data-selector.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nuxt.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/nuxt.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/admin/questions/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/admin/questions/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/admin/reports/[chart].vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/admin/reports/[chart].vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +17,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="Vue Single File Component" />
         <option value="TypeScript File" />
+        <option value="Vue Single File Component" />
       </list>
     </option>
   </component>
@@ -67,7 +67,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -99,11 +99,30 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1638" height="258" key="GridCell.Tab.0.bottom" timestamp="1638441033077">
+      <screen x="0" y="25" width="1680" height="1025" />
+    </state>
+    <state width="1638" height="258" key="GridCell.Tab.0.bottom/0.25.1680.1025@0.25.1680.1025" timestamp="1638441033077" />
+    <state width="1638" height="258" key="GridCell.Tab.0.center" timestamp="1638441033076">
+      <screen x="0" y="25" width="1680" height="1025" />
+    </state>
+    <state width="1638" height="258" key="GridCell.Tab.0.center/0.25.1680.1025@0.25.1680.1025" timestamp="1638441033076" />
+    <state width="1638" height="258" key="GridCell.Tab.0.left" timestamp="1638441033076">
+      <screen x="0" y="25" width="1680" height="1025" />
+    </state>
+    <state width="1638" height="258" key="GridCell.Tab.0.left/0.25.1680.1025@0.25.1680.1025" timestamp="1638441033076" />
+    <state width="1638" height="258" key="GridCell.Tab.0.right" timestamp="1638441033077">
+      <screen x="0" y="25" width="1680" height="1025" />
+    </state>
+    <state width="1638" height="258" key="GridCell.Tab.0.right/0.25.1680.1025@0.25.1680.1025" timestamp="1638441033077" />
   </component>
 </project>

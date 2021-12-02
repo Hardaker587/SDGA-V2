@@ -14,18 +14,18 @@
         <h1 class="text-md md:text-lg">Select data to see your chart</h1>
       </div>
     </div>
-    <div ref="chart-view" :key="uuid()"></div>
+    <AdminReportsDataSelector
+      v-if="!chart"
+      @chart-all-responses="fetchAllResponses()"
+    />
+    <div ref="chart-view"></div>
   </div>
 </template>
-
-<script setup>
-import { uuid } from '../../../utilities/uuid'
-const chart_view = ref(null)
-</script>
 <script>
 import { ChevronLeftIcon } from '@heroicons/vue/solid'
 import { filterArray } from '../../../utilities/data'
 import { ReturnAllSurveySelections } from '../../../enums/survey-selections.enum'
+import AdminReportsDataSelector from '../../../components/admin/reports/admin-reports-data-selector'
 
 export default {
   name: '[chart]',
@@ -38,35 +38,14 @@ export default {
     series: null,
   }),
   components: {
+    AdminReportsDataSelector,
     ChevronLeftIcon,
   },
-  unmounted() {
-    this.$forceUpdate()
-  },
-  mounted() {
-    this.fetchResponses()
-  },
   methods: {
-    fetchGoals() {
-      this.$firestore()
-        .getAllDocuments('goals')
-        .then((res) => (this.goals = res))
-    },
-    fetchCategories() {
-      this.$firestore()
-        .getAllDocuments('categories')
-        .then((res) => (this.categories = res))
-    },
-    fetchQuestions() {
-      this.$firestore()
-        .getAllDocuments('questions')
-        .then((res) => (this.questions = res))
-    },
-    async fetchResponses() {
+    async fetchAllResponses() {
       await this.$firestore()
         .getAllDocuments('responses')
         .then((res) => {
-          // flatten data
           const flatArray = []
           res.forEach((response) => flatArray.push(response.responses))
           const series = this.generateSeries('All responses', flatArray.flat())
@@ -94,12 +73,8 @@ export default {
           categories: labels,
         },
       }
-      try {
-        this.chart = this.$chart(this.$refs['chart-view'], options)
-        this.chart.render()
-      } catch (e) {
-        console.error('error rendering chart', e)
-      }
+      this.chart = this.$chart(this.$refs['chart-view'], options)
+      this.chart.render()
     },
   },
 }
