@@ -31,24 +31,6 @@
           <h2 class="card-title">Radar chart</h2>
         </div>
       </div>
-      <div class="card shadow-lg" @click="$router.push('/admin/reports/donut')">
-        <div class="card-body text-center">
-          <AnnotationIcon class="h-24 mb-4" />
-          <h2 class="card-title">Donut chart</h2>
-        </div>
-      </div>
-      <div class="card shadow-lg" @click="$router.push('/admin/reports/pie')">
-        <div class="card-body text-center">
-          <AnnotationIcon class="h-24 mb-4" />
-          <h2 class="card-title">Pie chart</h2>
-        </div>
-      </div>
-      <div class="card shadow-lg" @click="$router.push('/admin/reports/polar')">
-        <div class="card-body text-center">
-          <AnnotationIcon class="h-24 mb-4" />
-          <h2 class="card-title">Polar chart</h2>
-        </div>
-      </div>
     </div>
   </div>
 </template>

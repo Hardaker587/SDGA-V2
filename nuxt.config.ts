@@ -1,7 +1,6 @@
 import { defineNuxtConfig } from 'nuxt3'
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
-  dev: true,
   css: ['~/assets/css/tailwind.css', '~/assets/css/base.styles.css'],
   publicRuntimeConfig: {
     firebase: {
