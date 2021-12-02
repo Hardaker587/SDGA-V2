@@ -54,6 +54,20 @@ export class FirestoreService extends FirebaseService {
     return output
   }
 
+  public async compoundQueryDocuments(
+    collectionRef: string,
+    queries: Array<FirestoreQuery>
+  ) {
+    const compoundArray = queries.map((query) =>
+      where(query.key, query.operator, query.value)
+    )
+    const collectionReference = collection(this.firestore(), collectionRef)
+    const constructedQuery = query(collectionReference, ...compoundArray)
+
+    const querySnapshot = await getDocs(constructedQuery)
+    querySnapshot.forEach((snapshot) => console.log(snapshot.data()))
+  }
+
   public async documentCount(collectionRef: string) {
     const querySnapshot = await getDocs(
       collection(this.firestore(), collectionRef)

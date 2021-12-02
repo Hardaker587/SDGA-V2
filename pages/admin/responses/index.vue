@@ -22,7 +22,7 @@
           text-left
           mb-2
           text-white
-          bg-accent
+          bg-gray-700
         "
       >
         <div class="flex-1">User: {{ response.user.email }}</div>
