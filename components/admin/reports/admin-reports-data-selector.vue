@@ -2,14 +2,14 @@
   <div>
     <commonLoader v-if="loading" :active="loading" />
     <div class="grid grid-cols-2 gap-4 md:grid-cols-4 mb-4">
-      <div class="card shadow-lg" @click="$emit('chart-all-responses')">
+      <div class="card shadow-lg" @click="selectedAllData()">
         <div class="card-body text-center justify-center">
           <h2 class="card-title">All responses</h2>
         </div>
       </div>
       <div
         class="card shadow-lg"
-        @click=";[(this.selectingGoals = true), initateFetches()]"
+        @click=";(this.selectingGoals = true), initateFetches()"
       >
         <div class="card-body text-center justify-center">
           <h2 class="card-title">Goals</h2>
@@ -17,7 +17,7 @@
       </div>
       <div
         class="card shadow-lg"
-        @click=";[(this.selectingCategories = true), initateFetches()]"
+        @click=";(this.selectingCategories = true), initateFetches()"
       >
         <div class="card-body text-center justify-center">
           <h2 class="card-title">Goal Categories</h2>
@@ -25,14 +25,17 @@
       </div>
       <div
         class="card shadow-lg"
-        @click=";[(this.selectingQuestions = true), initateFetches()]"
+        @click=";(this.selectingQuestions = true), initateFetches()"
       >
         <div class="card-body text-center justify-center">
           <h2 class="card-title">Questions</h2>
         </div>
       </div>
     </div>
-    <div v-if="selectingGoals || selectingCategories || selectingQuestions">
+    <div
+      v-if="selectingGoals || selectingCategories || selectingQuestions"
+      :key="key"
+    >
       <Disclosure v-for="goal in goals" :key="goal.id" v-slot="{ open }">
         <DisclosureButton
           class="
@@ -48,7 +51,12 @@
             bg-gray-700
           "
         >
-          <input v-if="selectingGoals" type="checkbox" class="mr-2" />
+          <input
+            v-if="selectingGoals && !selectingCategories"
+            type="checkbox"
+            class="mr-2"
+            @input="selectGoal(goal.id)"
+          />
           <img
             :src="`/images/goals/Goal_${goal.sortOrder}.svg`"
             class="h-10 w-auto mr-2"
@@ -56,12 +64,15 @@
           />
           <div class="flex-1">{{ goal.title }}</div>
           <ChevronDownIcon
-            v-if="!selectingGoals"
+            v-if="!selectingGoals || selectingCategories || selectingQuestions"
             :class="open ? 'transform rotate-180' : ''"
             class="w-5 h-5"
           />
         </DisclosureButton>
-        <DisclosurePanel v-if="!selectingGoals" class="px-4 pb-2">
+        <DisclosurePanel
+          v-if="!selectingGoals || selectingCategories || selectingQuestions"
+          class="px-4 pb-2"
+        >
           <Disclosure
             v-for="category in filterGoalCategories(goal.id)"
             :key="category.id"
@@ -81,27 +92,63 @@
                 bg-gray-700
               "
             >
-              <input v-if="selectingCategories" type="checkbox" class="mr-2" />
+              <input
+                v-if="selectingCategories && !selectingQuestions"
+                type="checkbox"
+                class="mr-2"
+                @input="selectCategory(category.id)"
+              />
               <div class="flex-1">{{ category.title }}</div>
               <ChevronDownIcon
-                v-if="!selectingCategories"
+                v-if="!selectingCategories || selectingQuestions"
                 :class="open ? 'transform rotate-180' : ''"
                 class="w-5 h-5"
               />
             </DisclosureButton>
-            <DisclosurePanel v-if="!selectingCategories" class="px-4 pb-2">
+            <DisclosurePanel
+              v-if="!selectingCategories || selectingQuestions"
+              class="px-4 pb-2"
+            >
               <div
                 v-for="question in filterQuestions(category.id)"
                 :key="question.id"
                 class="flex mb-4 items-center"
               >
-                <input type="checkbox" class="mr-2" />
+                <input
+                  type="checkbox"
+                  class="mr-2"
+                  @input="selectQuestion(question.id)"
+                />
                 {{ question.question }}
               </div>
             </DisclosurePanel>
           </Disclosure>
         </DisclosurePanel>
       </Disclosure>
+    </div>
+    <div
+      v-if="selectingGoals || selectingCategories || selectingQuestions"
+      class="
+        sticky
+        bottom-0
+        shadow-xl
+        flex
+        justify-between
+        bg-white
+        w-full
+        z-50
+        p-4
+      "
+    >
+      <div>
+        <h1 class="text-lg font-black">Selections</h1>
+        <h1 class="text-md">
+          Click proceed when you are ready to view your chart
+        </h1>
+      </div>
+      <div class="bg-success p-4 text-white" @click="submitSelections()">
+        Proceed
+      </div>
     </div>
   </div>
 </template>
@@ -110,12 +157,14 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/vue/solid/esm'
 import commonLoader from '@/components/layouts/common/layouts-common-overlay.vue'
+import { uuid } from '../../../utilities/uuid'
 
 export default {
   name: 'admin-reports-data-selector',
   data: () => ({
     //general
     loading: false,
+    key: null,
     // renders
     selectingGoals: false,
     selectingCategories: false,
@@ -138,33 +187,55 @@ export default {
     commonLoader,
   },
   methods: {
+    selectedAllData() {
+      // disable selections
+      this.selectingGoals = false
+      this.selectingCategories = false
+      this.selectedQuestions = false
+      // nullify selections
+      this.goals = null
+      this.categories = null
+      this.questions = null
+      // emit the event
+      this.$emit('chart-all-responses')
+    },
     initateFetches() {
-      this.loading = true
+      this.loading = !this.loading
+      this.key = uuid()
       if (this.selectingGoals) {
-        this.selectingCategories = false
-        this.selectingQuestions = false
         this.fetchGoals()
       }
       if (this.selectingCategories) {
-        this.selectingGoals = false
-        this.selectingQuestions = false
-        this.fetchGoals()
+        if (!this.goals) {
+          this.fetchGoals()
+        }
         this.fetchGoalCategories()
       }
       if (this.selectingQuestions) {
-        this.selectingGoals = false
-        this.selectingCategories = false
-        this.fetchGoals()
-        this.fetchGoalCategories()
+        if (!this.goals) {
+          this.fetchGoals()
+        }
+        if (!this.categories) {
+          this.fetchGoalCategories()
+        }
         this.fetchQuestions()
       }
-      this.loading = false
+      this.loading = !this.loading
     },
+    // goals
     async fetchGoals() {
       await this.$firestore()
         .getAllDocuments('goals')
         .then((res) => (this.goals = res))
     },
+    selectGoal(goal) {
+      if (this.selectedGoals.some((selectedGoal) => selectedGoal === goal)) {
+        this.selectedGoals.splice(this.selectedGoals.indexOf(goal), 1)
+      } else {
+        this.selectedGoals.push(goal)
+      }
+    },
+    // categories
     async fetchGoalCategories() {
       await this.$firestore()
         .getAllDocuments('categories')
@@ -173,6 +244,21 @@ export default {
     filterGoalCategories(goal) {
       return this.categories.filter((category) => category.goal === goal)
     },
+    selectCategory(category) {
+      if (
+        this.selectedCategories.some(
+          (selectedCategory) => selectedCategory === category
+        )
+      ) {
+        this.selectedCategories.splice(
+          this.selectedCategories.indexOf(category),
+          1
+        )
+      } else {
+        this.selectedCategories.push(category)
+      }
+    },
+    // questions
     async fetchQuestions() {
       await this.$firestore()
         .getAllDocuments('questions')
@@ -182,6 +268,32 @@ export default {
       return this.questions.filter(
         (question) => question.goalCategory === category
       )
+    },
+    selectQuestion(question) {
+      if (
+        this.selectedQuestions.some(
+          (selectedQuestion) => selectedQuestion === question
+        )
+      ) {
+        this.selectedQuestions.splice(
+          this.selectedQuestions.indexOf(question),
+          1
+        )
+      } else {
+        this.selectedQuestions.push(question)
+      }
+    },
+    //submit
+    submitSelections() {
+      if (this.selectingGoals) {
+        this.$emit('chart-goals', this.selectedGoals)
+      }
+      if (this.selectingCategories) {
+        this.$emit('chart-categories', this.selectedCategories)
+      }
+      if (this.selectingQuestions) {
+        this.$emit('chart-questions', this.selectedQuestions)
+      }
     },
   },
 }

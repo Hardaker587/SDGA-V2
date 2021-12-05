@@ -17,9 +17,13 @@
     <AdminReportsDataSelector
       v-if="!chart"
       @chart-all-responses="fetchAllResponses()"
+      @chart-goals="logger('goals', $event)"
+      @chart-categories="logger('categories', $event)"
+      @chart-questions="logger('questions', $event)"
     />
     <apexchart
       v-if="series && options"
+      class="mt-4"
       :type="$route.params.chart || 'bar'"
       :options="options"
       :series="series"
@@ -79,6 +83,9 @@ export default {
         },
       }
       this.series = series
+    },
+    logger(name, data) {
+      return console.log({ [name]: data })
     },
   },
 }
