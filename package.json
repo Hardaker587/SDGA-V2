@@ -24,6 +24,7 @@
     "apexcharts": "^3.31.0",
     "daisyui": "^1.16.2",
     "firebase": "^9.5.0",
-    "pinia": "^2.0.4"
+    "pinia": "^2.0.4",
+    "vue3-apexcharts": "^1.4.1"
   }
 }

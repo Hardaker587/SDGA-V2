@@ -18,7 +18,12 @@
       v-if="!chart"
       @chart-all-responses="fetchAllResponses()"
     />
-    <div ref="chart-view"></div>
+    <apexchart
+      v-if="series && options"
+      :type="$route.params.chart || 'bar'"
+      :options="options"
+      :series="series"
+    ></apexchart>
   </div>
 </template>
 <script>
@@ -35,6 +40,7 @@ export default {
     questions: null,
     responses: null,
     chart: null,
+    options: null,
     series: null,
   }),
   components: {
@@ -64,17 +70,15 @@ export default {
     },
     generateChart(series, labels) {
       this.chart = null
-      const options = {
+      this.options = {
         chart: {
           type: this.$route.params.chart,
         },
-        series,
         xaxis: {
           categories: labels,
         },
       }
-      this.chart = this.$chart(this.$refs['chart-view'], options)
-      this.chart.render()
+      this.series = series
     },
   },
 }
