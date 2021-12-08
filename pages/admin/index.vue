@@ -6,25 +6,25 @@ await adminMiddleware()
   <div class="md:w-10/12 mx-auto">
     <h1 class="text-2xl font-black mb-4">General overview</h1>
     <div class="grid grid-cols-2 gap-4 md:grid-cols-4 mb-4">
-      <div class="card shadow-lg">
+      <div class="card shadow-lg bg-gray-500 text-white">
         <div class="card-body">
           <h2 class="card-title">Total surveys completed</h2>
           <p>{{ responsesCount || 0 }}</p>
         </div>
       </div>
-      <div class="card shadow-lg">
+      <div class="card shadow-lg bg-gray-500 text-white">
         <div class="card-body">
           <h2 class="card-title">Surveys completed today</h2>
           <p>{{ todaysResponsesCount || 0 }}</p>
         </div>
       </div>
-      <div class="card shadow-lg">
+      <div class="card shadow-lg bg-gray-500 text-white">
         <div class="card-body">
           <h2 class="card-title">Total questions</h2>
           <p>{{ questionsCount || 0 }}</p>
         </div>
       </div>
-      <div class="card shadow-lg">
+      <div class="card shadow-lg bg-gray-500 text-white">
         <div class="card-body">
           <h2 class="card-title">Total users</h2>
           <p>{{ userCount || 0 }}</p>
@@ -34,25 +34,37 @@ await adminMiddleware()
     <hr class="mb-4" />
     <h1 class="text-2xl font-black mb-4">Navigation</h1>
     <div class="grid grid-cols-2 gap-4 md:grid-cols-4 mb-4">
-      <div class="card shadow-lg" @click="$router.push('/admin/questions')">
+      <div
+        class="card shadow-lg bg-white hover:bg-blue-200"
+        @click="$router.push('/admin/questions')"
+      >
         <div class="card-body text-center">
           <QuestionMarkCircleIcon class="h-24 mb-4" />
           <h2 class="card-title">Manage Questions</h2>
         </div>
       </div>
-      <div class="card shadow-lg">
+      <div
+        class="card shadow-lg bg-white hover:bg-blue-200"
+        @click="$router.push('/admin/reports')"
+      >
         <div class="card-body text-center">
           <DocumentReportIcon class="h-24 mb-4" />
           <h2 class="card-title">View Reports</h2>
         </div>
       </div>
-      <div class="card shadow-lg" @click="$router.push('/admin/responses')">
+      <div
+        class="card shadow-lg bg-white hover:bg-blue-200"
+        @click="$router.push('/admin/responses')"
+      >
         <div class="card-body text-center">
           <AnnotationIcon class="h-24 mb-4" />
           <h2 class="card-title">View Responses</h2>
         </div>
       </div>
-      <div class="card shadow-lg">
+      <div
+        class="card shadow-lg bg-white hover:bg-blue-200"
+        @click="$router.push('/admin/users')"
+      >
         <div class="card-body text-center">
           <UserCircleIcon class="h-24 mb-4" />
           <h2 class="card-title">Manage Users</h2>

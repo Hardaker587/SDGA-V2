@@ -8,7 +8,7 @@
         <ChevronLeftIcon class="w-8" />
       </button>
       <div>
-        <h1 class="text-lg md:text-2xl font-black">
+        <h1 class="text-lg md:text-2xl font-black capitalize">
           {{ $route.params.chart }} chart
         </h1>
         <h1 class="text-md md:text-lg">Select data to see your chart</h1>
@@ -24,9 +24,9 @@
     <AdminReportsDataSelector
       v-if="!options && !series"
       @chart-all-responses="fetchAllResponses()"
-      @chart-goals="fetchResponsesForGoals($event)"
-      @chart-categories="fetchResponsesForCategories($event)"
-      @chart-questions="fetchResponsesForQuestions($event)"
+      @chart-goals="fetchResponses($event, 'goals', 'goalId', 'title')"
+      @chart-categories="fetchResponses($event, 'categories', 'categoryId', 'title')"
+      @chart-questions="fetchResponses($event, 'questions', 'questionId', 'question')"
     />
     <apexchart
       v-if="series && options"
@@ -69,14 +69,14 @@ export default {
           this.generateChart([series], this.generateLabels())
         })
     },
-    fetchResponsesForQuestions(questionIds) {
+    fetchResponses(fetchIds, collection, fieldLookup, seriesLabelLookup) {
       const series = []
-      questionIds.forEach(async (questionId) => {
-        let question = ''
+      fetchIds.forEach(async (id) => {
+        let singleDocument = ''
         let responses = []
         await this.$firestore()
-          .getOneDocument('questions', questionId)
-          .then((res) => (question = res))
+          .getOneDocument(collection, id)
+          .then((res) => (singleDocument = res))
         await this.$firestore()
           .getAllDocuments('responses')
           .then((res) => {
@@ -84,54 +84,12 @@ export default {
               .map((response) => response.responses)
               .flat()
             responses = mappedResponses.filter(
-              (mappedResponse) => mappedResponse.questionId === questionId
+              (mappedResponse) => mappedResponse[fieldLookup] === id
             )
           })
-        series.push(this.generateSeries(question.question, responses))
-        this.generateChart(series, this.generateLabels())
-      })
-    },
-    fetchResponsesForCategories(categoryIds) {
-      const series = []
-      categoryIds.forEach(async (categoryId) => {
-        let category = ''
-        let responses = []
-        await this.$firestore()
-          .getOneDocument('categories', categoryId)
-          .then((res) => (category = res))
-        await this.$firestore()
-          .getAllDocuments('responses')
-          .then((res) => {
-            const mappedResponses = res
-              .map((response) => response.responses)
-              .flat()
-            responses = mappedResponses.filter(
-              (mappedResponse) => mappedResponse.categoryId === categoryId
-            )
-          })
-        series.push(this.generateSeries(category.title, responses))
-        this.generateChart(series, this.generateLabels())
-      })
-    },
-    fetchResponsesForGoals(goalIds) {
-      const series = []
-      goalIds.forEach(async (goalId) => {
-        let category = ''
-        let responses = []
-        await this.$firestore()
-          .getOneDocument('goals', goalId)
-          .then((res) => (category = res))
-        await this.$firestore()
-          .getAllDocuments('responses')
-          .then((res) => {
-            const mappedResponses = res
-              .map((response) => response.responses)
-              .flat()
-            responses = mappedResponses.filter(
-              (mappedResponse) => mappedResponse.goalId === goalId
-            )
-          })
-        series.push(this.generateSeries(category.title, responses))
+        series.push(
+          this.generateSeries(singleDocument[seriesLabelLookup], responses)
+        )
         this.generateChart(series, this.generateLabels())
       })
     },
@@ -156,9 +114,6 @@ export default {
         },
       }
       this.series = series
-    },
-    logger(name, data) {
-      return console.log({ [name]: data })
     },
   },
 }

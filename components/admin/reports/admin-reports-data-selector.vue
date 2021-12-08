@@ -137,9 +137,13 @@
           Click proceed when you are ready to view your chart
         </h1>
       </div>
-      <div class="bg-success p-4 text-white" @click="submitSelections()">
+      <button
+        class="bg-success p-4 text-white disabled:opacity-50"
+        :class="!canSubmit ? 'opacity-50' : ''"
+        @click="submitSelections()"
+      >
         Proceed
-      </div>
+      </button>
     </div>
   </div>
 </template>
@@ -176,6 +180,15 @@ export default {
     ChevronDownIcon,
     ChevronLeftIcon,
     commonLoader,
+  },
+  computed: {
+    canSubmit() {
+      return (
+        !!this.selectedGoals.length ||
+        !!this.selectedCategories ||
+        !!this.selectingQuestions
+      )
+    },
   },
   methods: {
     selectedAllData() {
@@ -214,18 +227,25 @@ export default {
       this.loading = !this.loading
     },
     initiateFetchGoals() {
+      this.loading = true
       this.selectingGoals = true
       this.selectingCategories = false
       this.selectingQuestions = false
-      this.fetchGoals()
+      this.fetchGoals().then(() => {
+        this.loading = false
+      })
     },
     initiateFetchCategories() {
+      this.loading = true
       this.selectingGoals = false
       this.selectingCategories = true
       this.selectingQuestions = false
-      Promise.all([this.fetchGoals(), this.fetchGoalCategories()])
+      Promise.all([this.fetchGoals(), this.fetchGoalCategories()]).then(
+        () => (this.loading = false)
+      )
     },
     initiateFetchQuestions() {
+      this.loading = true
       this.selectingGoals = false
       this.selectingCategories = false
       this.selectingQuestions = true
@@ -233,7 +253,7 @@ export default {
         this.fetchGoals(),
         this.fetchGoalCategories(),
         this.fetchQuestions(),
-      ])
+      ]).then(() => (this.loading = false))
     },
     // goals
     async fetchGoals() {
@@ -300,6 +320,7 @@ export default {
     },
     //submit
     submitSelections() {
+      if (!this.canSubmit) return
       if (this.selectingGoals) {
         this.$emit('chart-goals', this.selectedGoals)
       }

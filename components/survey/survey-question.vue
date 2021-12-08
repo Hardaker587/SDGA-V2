@@ -6,11 +6,10 @@
         v-for="selection in selections"
         :key="selection"
         class="flex md:flex-col items-center p-2"
-        :class="highlightSelection(selection.key)"
+        :class="highlightSelection(selection)"
       >
         <input
-          v-model="chosenSelection"
-          :value="selection.key"
+          :checked="returnActiveSelection(selection)"
           type="radio"
           class="mr-2 md:mb-1 md:mr-0"
           @click="addSelection(selection)"
@@ -43,11 +42,19 @@ export default {
       }
       return output
     },
+    selectionInStore() {
+      return this.$surveyStore().get_survey_user_selections.find(
+        (selection) => selection.questionId === this.question
+      )
+    },
   },
   methods: {
     highlightSelection(selection) {
-      if (selection === this.chosenSelection)
+      if (selection?.key === this.selectionInStore?.key)
         return 'bg-primary rounded-box text-white'
+    },
+    returnActiveSelection(selection) {
+      return this.selectionInStore?.key === selection.key
     },
     addSelection(selection) {
       this.$surveyStore().set_survey_user_selections({

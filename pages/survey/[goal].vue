@@ -45,13 +45,13 @@ await authMiddleware()
               ? 'btn-disabled bg-gray-200 border-gray-200'
               : ''
           "
-          v-if="$route.params.goal !== '16'"
+          v-if="$route.params.goal !== '17'"
           @click="$router.replace({ path: `/survey/${++$route.params.goal}` })"
         >
           Next
         </div>
         <div
-          v-if="$route.params.goal !== '16' && canSubmit"
+          v-if="$route.params.goal === '17' && canSubmit"
           class="btn btn-success btn-sm md:btn-md"
           @click="submitResponses()"
         >
@@ -102,10 +102,14 @@ export default {
       )
       return this.surveyQuestions.length === completedQuestionsForGoal.length
     },
-    canSubmit() {
+    async canSubmit() {
       const completedQuestions = this.$surveyStore().get_survey_user_selections
-      const surveyLength = this.$firestore().documentCount('questions')
-      return completedQuestions.length === surveyLength.length
+      let surveyLength = 0
+      await this.$firestore()
+        .documentCount('questions')
+        .then((res) => (surveyLength = res))
+      console.log(surveyLength)
+      return completedQuestions.length === surveyLength
     },
   },
   mounted() {
