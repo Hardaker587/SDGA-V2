@@ -12,14 +12,21 @@
           {{ $route.params.chart }} chart
         </h1>
         <h1 class="text-md md:text-lg">Select data to see your chart</h1>
+        <div
+          v-if="series && options"
+          class="text-error underline"
+          @click=";(series = null), (options = null)"
+        >
+          reset
+        </div>
       </div>
     </div>
     <AdminReportsDataSelector
-      v-if="!chart"
+      v-if="!options && !series"
       @chart-all-responses="fetchAllResponses()"
-      @chart-goals="logger('goals', $event)"
-      @chart-categories="logger('categories', $event)"
-      @chart-questions="logger('questions', $event)"
+      @chart-goals="fetchResponsesForGoals($event)"
+      @chart-categories="fetchResponsesForCategories($event)"
+      @chart-questions="fetchResponsesForQuestions($event)"
     />
     <apexchart
       v-if="series && options"
@@ -27,7 +34,7 @@
       :type="$route.params.chart || 'bar'"
       :options="options"
       :series="series"
-    ></apexchart>
+    />
   </div>
 </template>
 <script>
@@ -61,6 +68,72 @@ export default {
           const series = this.generateSeries('All responses', flatArray.flat())
           this.generateChart([series], this.generateLabels())
         })
+    },
+    fetchResponsesForQuestions(questionIds) {
+      const series = []
+      questionIds.forEach(async (questionId) => {
+        let question = ''
+        let responses = []
+        await this.$firestore()
+          .getOneDocument('questions', questionId)
+          .then((res) => (question = res))
+        await this.$firestore()
+          .getAllDocuments('responses')
+          .then((res) => {
+            const mappedResponses = res
+              .map((response) => response.responses)
+              .flat()
+            responses = mappedResponses.filter(
+              (mappedResponse) => mappedResponse.questionId === questionId
+            )
+          })
+        series.push(this.generateSeries(question.question, responses))
+        this.generateChart(series, this.generateLabels())
+      })
+    },
+    fetchResponsesForCategories(categoryIds) {
+      const series = []
+      categoryIds.forEach(async (categoryId) => {
+        let category = ''
+        let responses = []
+        await this.$firestore()
+          .getOneDocument('categories', categoryId)
+          .then((res) => (category = res))
+        await this.$firestore()
+          .getAllDocuments('responses')
+          .then((res) => {
+            const mappedResponses = res
+              .map((response) => response.responses)
+              .flat()
+            responses = mappedResponses.filter(
+              (mappedResponse) => mappedResponse.categoryId === categoryId
+            )
+          })
+        series.push(this.generateSeries(category.title, responses))
+        this.generateChart(series, this.generateLabels())
+      })
+    },
+    fetchResponsesForGoals(goalIds) {
+      const series = []
+      goalIds.forEach(async (goalId) => {
+        let category = ''
+        let responses = []
+        await this.$firestore()
+          .getOneDocument('goals', goalId)
+          .then((res) => (category = res))
+        await this.$firestore()
+          .getAllDocuments('responses')
+          .then((res) => {
+            const mappedResponses = res
+              .map((response) => response.responses)
+              .flat()
+            responses = mappedResponses.filter(
+              (mappedResponse) => mappedResponse.goalId === goalId
+            )
+          })
+        series.push(this.generateSeries(category.title, responses))
+        this.generateChart(series, this.generateLabels())
+      })
     },
     generateLabels() {
       return ReturnAllSurveySelections().map((selection) => selection.value)

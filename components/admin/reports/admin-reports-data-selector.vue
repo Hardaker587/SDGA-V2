@@ -7,26 +7,17 @@
           <h2 class="card-title">All responses</h2>
         </div>
       </div>
-      <div
-        class="card shadow-lg"
-        @click=";(this.selectingGoals = true), initateFetches()"
-      >
+      <div class="card shadow-lg" @click="initiateFetchGoals()">
         <div class="card-body text-center justify-center">
           <h2 class="card-title">Goals</h2>
         </div>
       </div>
-      <div
-        class="card shadow-lg"
-        @click=";(this.selectingCategories = true), initateFetches()"
-      >
+      <div class="card shadow-lg" @click="initiateFetchCategories()">
         <div class="card-body text-center justify-center">
           <h2 class="card-title">Goal Categories</h2>
         </div>
       </div>
-      <div
-        class="card shadow-lg"
-        @click=";(this.selectingQuestions = true), initateFetches()"
-      >
+      <div class="card shadow-lg" @click="initiateFetchQuestions()">
         <div class="card-body text-center justify-center">
           <h2 class="card-title">Questions</h2>
         </div>
@@ -222,11 +213,35 @@ export default {
       }
       this.loading = !this.loading
     },
+    initiateFetchGoals() {
+      this.selectingGoals = true
+      this.selectingCategories = false
+      this.selectingQuestions = false
+      this.fetchGoals()
+    },
+    initiateFetchCategories() {
+      this.selectingGoals = false
+      this.selectingCategories = true
+      this.selectingQuestions = false
+      Promise.all([this.fetchGoals(), this.fetchGoalCategories()])
+    },
+    initiateFetchQuestions() {
+      this.selectingGoals = false
+      this.selectingCategories = false
+      this.selectingQuestions = true
+      Promise.all([
+        this.fetchGoals(),
+        this.fetchGoalCategories(),
+        this.fetchQuestions(),
+      ])
+    },
     // goals
     async fetchGoals() {
       await this.$firestore()
         .getAllDocuments('goals')
-        .then((res) => (this.goals = res))
+        .then((res) => {
+          this.goals = res.sort((a, b) => a.sortOrder > b.sortOrder)
+        })
     },
     selectGoal(goal) {
       if (this.selectedGoals.some((selectedGoal) => selectedGoal === goal)) {
