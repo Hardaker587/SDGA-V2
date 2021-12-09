@@ -109,16 +109,17 @@ export default {
       )
       return this.surveyQuestions.length === completedQuestionsForGoal.length
     },
-    async canSubmit() {
+    canSubmit() {
       const completedQuestions = this.$surveyStore().get_survey_user_selections
       let surveyLength = 0
-      await this.$firestore()
+      this.$firestore()
         .documentCount('questions')
         .then((res) => (surveyLength = res))
       return completedQuestions.length === surveyLength
     },
   },
   mounted() {
+    this.$surveyStore().set_survey_user_selections_from_storage()
     this.initiatePage()
   },
   methods: {

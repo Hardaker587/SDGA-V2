@@ -1,5 +1,8 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { SurveySelectionInterface } from '../../interfaces/survey/SurveySelection.interface'
+import { StorageService } from '../../services/storage.service'
+
+const storage = new StorageService()
 
 export const survey_store = defineStore('survey_store', {
   state: () => ({
@@ -9,6 +12,11 @@ export const survey_store = defineStore('survey_store', {
     get_survey_user_selections: (state) => state.surveyUserSelections,
   },
   actions: {
+    set_survey_user_selections_from_storage() {
+      const selectionsFromLocalStore = storage.getStorage({ key: 'survey' })
+      this.surveyUserSelections =
+        JSON.parse(String(selectionsFromLocalStore)) ?? []
+    },
     set_survey_user_selections(selection: SurveySelectionInterface) {
       if (
         this.surveyUserSelections.some(
@@ -24,7 +32,10 @@ export const survey_store = defineStore('survey_store', {
       } else {
         this.surveyUserSelections.push(selection)
       }
-      this.loading = status
+      storage.setStorage({
+        key: 'survey',
+        value: JSON.stringify(this.surveyUserSelections),
+      })
     },
   },
 })
