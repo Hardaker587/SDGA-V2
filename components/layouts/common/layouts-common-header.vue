@@ -29,7 +29,9 @@
       <div class="hidden md:block">
         <div class="flex flex-col items-end">
           <div class="text-sm">Welcome back</div>
-          <div class="text-sm font-black">{{ $authStore().getUser?.email }}</div>
+          <div class="text-sm font-black">
+            {{ $authStore().getUser?.email }}
+          </div>
         </div>
       </div>
       <button

@@ -1,5 +1,9 @@
+<script setup>
+  await adminMiddleware()
+</script>
+
 <template>
-  <div class="md:w-8/12 mx-auto">
+  <div v-if="$authStore().getclaims?.admin" class="md:w-8/12 mx-auto">
     <div class="flex items-center mb-4">
       <button
         class="btn btn-circle mr-4 btn-sm md:btn-md"

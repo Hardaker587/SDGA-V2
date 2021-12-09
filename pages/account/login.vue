@@ -60,7 +60,7 @@
         @click="
           ;[
             (loading = true),
-            $auth().login({ email, password }, true, '/survey/1'),
+            $auth().login({ email, password }, true, '/survey'),
           ]
         "
       >

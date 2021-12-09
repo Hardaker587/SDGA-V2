@@ -1,3 +1,7 @@
+<script setup>
+await adminMiddleware()
+</script>
+
 <template>
   <div class="md:w-8/12 mx-auto md:px-4">
     <commonLoader v-if="loading" :active="loading" />
@@ -95,7 +99,6 @@ export default {
         .then((res) => (this.goal = res))
     },
     async fetchCategories(goalId) {
-      console.log('categories')
       await this.$firestore()
         .queryDocuments('categories', {
           key: 'goal',
@@ -107,7 +110,6 @@ export default {
         })
     },
     async fetchQuestions(goalId) {
-      console.log('questions')
       await this.$firestore()
         .queryDocuments('questions', {
           key: 'goal',
@@ -115,14 +117,11 @@ export default {
           value: goalId,
         })
         .then((res) => {
-          console.log(res)
           this.questions = res.sort((a, b) => a.sortOrder > b.sortOrder)
         })
     },
     filterQuestions(id) {
-      return this.questions?.filter(
-        (question) => question.goalCategory === id
-      )
+      return this.questions?.filter((question) => question.goalCategory === id)
     },
   },
 }

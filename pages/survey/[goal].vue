@@ -21,6 +21,12 @@ await authMiddleware()
       :style="`background-color: ${surveyGoal?.color}`"
     >
       <div class="flex flex-1 items-center">
+        <button
+          class="btn btn-circle mr-4 btn-sm md:btn-md"
+          @click="$router.push('/survey')"
+        >
+          <HomeIcon class="w-8" />
+        </button>
         <img
           class="goal_image mr-4"
           :src="`/images/goals/Goal_${$route.params.goal}.svg`"
@@ -82,11 +88,12 @@ await authMiddleware()
   </div>
 </template>
 <script>
+import { HomeIcon } from '@heroicons/vue/solid'
 import surveyQuestion from '@/components/survey/survey-question.vue'
 import commonLoader from '@/components/layouts/common/layouts-common-overlay.vue'
 import { uuid } from '../../utilities/uuid'
 export default {
-  components: { surveyQuestion, commonLoader },
+  components: { surveyQuestion, commonLoader, HomeIcon },
   name: '[goal]',
   data: () => ({
     surveyGoal: null,
@@ -108,7 +115,6 @@ export default {
       await this.$firestore()
         .documentCount('questions')
         .then((res) => (surveyLength = res))
-      console.log(surveyLength)
       return completedQuestions.length === surveyLength
     },
   },

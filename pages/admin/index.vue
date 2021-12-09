@@ -3,7 +3,7 @@ await adminMiddleware()
 </script>
 
 <template>
-  <div class="md:w-10/12 mx-auto">
+  <div v-if="$authStore().getclaims?.admin" class="md:w-10/12 mx-auto">
     <h1 class="text-2xl font-black mb-4">General overview</h1>
     <div class="grid grid-cols-2 gap-4 md:grid-cols-4 mb-4">
       <div class="card shadow-lg bg-gray-500 text-white">

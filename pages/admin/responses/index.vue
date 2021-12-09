@@ -1,3 +1,7 @@
+<script setup>
+  await adminMiddleware()
+</script>
+
 <template>
   <commonLoader v-if="loading" :active="loading" />
   <div v-else class="md:w-8/12 mx-auto">

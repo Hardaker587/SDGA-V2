@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="$authStore().getclaims?.admin">
     <button class="m-2" aria-label="Open Menu" @click="drawer">
       <MenuIcon class="w-10" />
     </button>
@@ -92,7 +92,7 @@ export default {
     isOpen: false,
     navigationItems: [
       { title: 'Home', icon: HomeIcon, route: '/' },
-      { title: 'Survey', icon: ClipboardListIcon, route: '/survey/1' },
+      { title: 'Survey', icon: ClipboardListIcon, route: '/survey' },
       {
         title: 'Questions',
         icon: QuestionMarkCircleIcon,
