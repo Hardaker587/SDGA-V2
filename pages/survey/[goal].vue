@@ -167,18 +167,24 @@ export default {
         (question) => question.goalCategory === id
       )
     },
-    submitResponses() {
+    async submitResponses() {
+      this.loading = true
       const date = new Date().toLocaleDateString()
       const time = new Date().toLocaleTimeString()
       const submission = { date, time }
 
       const user = this.$authStore().getUser
 
-      this.$firestore().addDocument('responses', uuid(), {
-        user: { email: user.email, uid: user.uid },
-        submission,
-        responses: this.$surveyStore().get_survey_user_selections,
-      })
+      await this.$firestore()
+        .addDocument('responses', uuid(), {
+          user: { email: user.email, uid: user.uid },
+          submission,
+          responses: this.$surveyStore().get_survey_user_selections,
+        })
+        .then(() => {
+          this.loading = false
+          this.$router.push('/survey/complete')
+        })
     },
   },
 }

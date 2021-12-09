@@ -2,6 +2,13 @@ import { defineNuxtConfig } from 'nuxt3'
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
   css: ['~/assets/css/tailwind.css', '~/assets/css/base.styles.css'],
+  meta: {
+    script: [
+      {
+        src: 'https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js',
+      },
+    ],
+  },
   publicRuntimeConfig: {
     firebase: {
       apiKey: process.env.FIREBASE_API_KEY,
