@@ -7,12 +7,12 @@
         :key="selection"
         class="flex md:flex-col items-center p-2"
         :class="highlightSelection(selection)"
+        @click="addSelection(selection)"
       >
         <input
           :checked="returnActiveSelection(selection)"
           type="radio"
           class="mr-2 md:mb-1 md:mr-0"
-          @click="addSelection(selection)"
         />
         <div class="md:mt-1 text-xs">{{ selection.value }}</div>
       </div>
