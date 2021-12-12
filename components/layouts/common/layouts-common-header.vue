@@ -8,7 +8,7 @@
         class="header-logo"
         src="/images/branding/sustainable-development.svg"
         alt=""
-        @click="$router.replace($authStore().isLoggedIn ? '/survey/1' : '/')"
+        @click="$router.replace($authStore().isLoggedIn ? '/survey' : '/')"
       />
     </div>
     <div class="flex" v-if="!$authStore().isLoggedIn">
