@@ -1,26 +1,89 @@
 <script setup>
-  await adminMiddleware()
+await adminMiddleware()
 </script>
 
 <template>
-  <div v-if="$authStore().getclaims?.admin" class="md:w-8/12 mx-auto">
+  <commonLoader v-if="loading" :active="loading" />
+  <div v-else class="md:w-8/12 mx-auto">
     <div class="flex items-center mb-4">
+      <div class="flex items-center flex-1">
+        <button
+          class="btn btn-circle mr-4 btn-sm md:btn-md"
+          @click="$router.push('/admin')"
+        >
+          <ChevronLeftIcon class="w-8" />
+        </button>
+        <h1 class="text-lg md:text-2xl font-black">Users</h1>
+      </div>
+
       <button
-        class="btn btn-circle mr-4 btn-sm md:btn-md"
-        @click="$router.push('/admin')"
+        class="btn btn-primary mr-2 btn-sm md:btn-md"
+        @click="$router.replace('/account/login')"
       >
-        <ChevronLeftIcon class="w-8" />
+        New User
       </button>
-      <h1 class="text-lg md:text-2xl font-black">Users</h1>
+      <button
+        class="btn btn-outline btn-primary btn-sm md:btn-md"
+        @click="$router.replace('/account/sign-up')"
+      >
+        New Admin User
+      </button>
     </div>
+    <Disclosure v-for="user in users" :key="user.id" v-slot="{ open }">
+      <DisclosureButton
+        class="
+          flex
+          justify-between
+          w-full
+          p-4
+          font-medium
+          text-left
+          mb-2
+          text-white
+          bg-gray-700
+        "
+      >
+        <div class="flex-1">{{ user.firstName }} {{ user.lastName }}</div>
+        <ChevronDownIcon
+          :class="open ? 'transform rotate-180' : ''"
+          class="w-5 h-5"
+        />
+      </DisclosureButton>
+    </Disclosure>
   </div>
 </template>
 
 <script>
-import { ChevronLeftIcon } from '@heroicons/vue/solid'
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
+import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/vue/solid'
+import commonLoader from '@/components/layouts/common/layouts-common-overlay.vue'
 
 export default {
   name: 'index',
-  components: { ChevronLeftIcon },
+  data: () => ({
+    users: null,
+    loading: true,
+  }),
+  components: {
+    ChevronLeftIcon,
+    Disclosure,
+    DisclosureButton,
+    DisclosurePanel,
+    ChevronDownIcon,
+    commonLoader,
+  },
+  mounted() {
+    this.fetchUsers()
+  },
+  methods: {
+    fetchUsers() {
+      this.$firestore()
+        .getAllDocuments('users')
+        .then((res) => (this.users = res))
+        .finally(() => {
+          this.loading = false
+        })
+    },
+  },
 }
 </script>
