@@ -18,13 +18,13 @@ await adminMiddleware()
 
       <button
         class="btn btn-primary mr-2 btn-sm md:btn-md"
-        @click="$router.replace('/account/login')"
+        @click="$router.replace('/admin/users/new')"
       >
         New User
       </button>
       <button
         class="btn btn-outline btn-primary btn-sm md:btn-md"
-        @click="$router.replace('/account/sign-up')"
+        @click="$router.replace('/admin/users/new/admin')"
       >
         New Admin User
       </button>
@@ -41,21 +41,41 @@ await adminMiddleware()
           mb-2
           text-white
           bg-gray-700
+          items-center
         "
       >
+        <UserIcon class="w-4 mr-2" />
         <div class="flex-1">{{ user.firstName }} {{ user.lastName }}</div>
+        <BadgeCheckIcon v-if="user.admin" class="w-8 mr-2 text-blue-500" />
         <ChevronDownIcon
           :class="open ? 'transform rotate-180' : ''"
           class="w-5 h-5"
         />
       </DisclosureButton>
+      <DisclosurePanel class="px-4 pb-2">
+        <div>
+          <div
+            v-for="(userDetail, index) in Object.keys(user)"
+            :key="`user-${user.id}-${userDetail}`"
+            class="grid grid-cols-2 truncate mb-1 bg-white p-2 rounded-box"
+          >
+            <div class="font-bold title">{{ userDetail }}:</div>
+            <div>{{ user[userDetail] }}</div>
+          </div>
+        </div>
+      </DisclosurePanel>
     </Disclosure>
   </div>
 </template>
 
 <script>
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
-import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/vue/solid'
+import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  UserIcon,
+  BadgeCheckIcon,
+} from '@heroicons/vue/solid'
 import commonLoader from '@/components/layouts/common/layouts-common-overlay.vue'
 
 export default {
@@ -65,11 +85,13 @@ export default {
     loading: true,
   }),
   components: {
+    UserIcon,
     ChevronLeftIcon,
     Disclosure,
     DisclosureButton,
     DisclosurePanel,
     ChevronDownIcon,
+    BadgeCheckIcon,
     commonLoader,
   },
   mounted() {

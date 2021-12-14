@@ -1,10 +1,6 @@
-<script setup>
-await adminMiddleware()
-</script>
-
 <template>
-  <div class="md:w-8/12 mx-auto md:px-4">
-    <commonLoader v-if="loading" :active="loading" />
+  <commonLoader v-if="loading" :active="loading" />
+  <div v-else class="md:w-8/12 mx-auto md:px-4">
     <div class="flex items-center my-4">
       <button
         class="btn btn-circle btn-sm md:btn-md mr-2"
@@ -39,10 +35,18 @@ await adminMiddleware()
             text-left
             mb-2
             text-white
+            items-center
           "
           :style="`background: ${goal?.color}`"
         >
-          <span>{{ category.sortOrder }}. {{ category.title }}</span>
+          <div class="flex-1">
+            {{ category.sortOrder }}. {{ category.title }}
+          </div>
+          <div
+            class="rounded-full p-1 w-8 h-8 bg-black bg-opacity-50 text-center mr-4"
+          >
+            {{ filterQuestions(category.id).length }}
+          </div>
           <ChevronUpIcon
             :class="open ? 'transform rotate-180' : ''"
             class="w-5 h-5"
@@ -99,6 +103,7 @@ export default {
         .then((res) => (this.goal = res))
     },
     async fetchCategories(goalId) {
+      console.log('categories')
       await this.$firestore()
         .queryDocuments('categories', {
           key: 'goal',
@@ -110,6 +115,7 @@ export default {
         })
     },
     async fetchQuestions(goalId) {
+      console.log('questions')
       await this.$firestore()
         .queryDocuments('questions', {
           key: 'goal',
