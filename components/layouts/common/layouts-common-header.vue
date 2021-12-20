@@ -30,7 +30,9 @@
         <div class="flex flex-col items-end">
           <div class="text-sm">Welcome back</div>
           <div class="text-sm font-black">
-            {{ $authStore().getUser?.email }}
+            {{
+              $authStore().getUser?.displayName ?? $authStore().getUser?.email
+            }}
           </div>
         </div>
       </div>

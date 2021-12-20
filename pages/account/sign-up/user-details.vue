@@ -95,7 +95,10 @@ await authMiddleware()
           </option>
         </select>
       </div>
-      <button class="btn btn-primary w-full md:w-7/12 mt-4" @click="signUp()">
+      <button
+        class="btn btn-primary w-full md:w-7/12 mt-4"
+        @click="completeProfile()"
+      >
         Continue to survey
       </button>
     </div>
@@ -152,6 +155,24 @@ export default {
       'Kwa-Zulu Natal',
     ],
   }),
+  methods: {
+    async completeProfile() {
+      try {
+        await this.$auth()
+          .updateProfile({ displayName: this.userDetails.displayName })
+          .then(() => {
+            const user = this.$authStore().getUser
+            this.$firestore().addDocument('users', user.uid, {
+              email: user.email,
+              ...this.userDetails,
+            })
+          })
+          .then(() => {
+            this.$router.push('/survey')
+          })
+      } catch (e) {}
+    },
+  },
 }
 </script>
 

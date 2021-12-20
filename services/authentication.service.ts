@@ -34,12 +34,16 @@ export class AuthenticationService extends FirebaseService {
       })
   }
 
-  public register({
-    email,
-    password,
-  }: AuthenticationInterface): Promise<void | User> {
+  public register(
+    { email, password }: AuthenticationInterface,
+    redirect?: boolean,
+    redirectUrl?: string
+  ): Promise<void | User> {
     return createUserWithEmailAndPassword(this.auth(), email, password)
       .then((userCredential) => userCredential.user)
+      .finally(() => {
+        if (redirect) document.location.href = redirectUrl ? redirectUrl : '/'
+      })
       .catch((error) => {
         const errorCode = error.code
         const errorMessage = error.message
@@ -77,6 +81,7 @@ export class AuthenticationService extends FirebaseService {
       })
     }).then((claims) => {
       auth_store().set_claims(claims)
+      return claims
     })
     return auth_store().getclaims
   }
@@ -93,7 +98,7 @@ export class AuthenticationService extends FirebaseService {
   }
 
   public updateProfile({ displayName, photoURL }: UpdateProfileInterface) {
-    return updateProfile(<User>(<unknown>this.user()), {
+    return updateProfile(this.auth().currentUser, {
       displayName,
       photoURL,
     })

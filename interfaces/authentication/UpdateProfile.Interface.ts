@@ -1,4 +1,4 @@
 export interface UpdateProfileInterface {
-  displayName: string
-  photoURL: string
+  displayName?: string
+  photoURL?: string
 }

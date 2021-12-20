@@ -83,14 +83,11 @@ export default {
   methods: {
     signUp() {
       this.loading = true
-      return this.$auth()
-        .register({ email: this.email, password: this.password })
-        .then(() => {
-          this.$auth().login(
-            { email: this.email, password: this.password },
-            () => this.$router.push('/account/sign-up/user-details')
-          )
-        })
+      return this.$auth().register(
+        { email: this.email, password: this.password },
+        true,
+        '/account/sign-up/user-details'
+      )
     },
   },
 }

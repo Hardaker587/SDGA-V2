@@ -1,5 +1,9 @@
 <template>
   <div class="md:w-8/12 mx-auto">
+    <div class="text-error mb-2 text-center">
+      <span class="font-black">Disclaimer:</span>
+      Creating a new user will log you out of your current session.
+    </div>
     <div class="flex items-center mb-4">
       <div class="flex items-center flex-1">
         <button
@@ -18,16 +22,19 @@
         Save
       </button>
     </div>
+    <admin-users-create />
   </div>
 </template>
 
 <script>
 import { ChevronLeftIcon } from '@heroicons/vue/solid'
 import commonLoader from '@/components/layouts/common/layouts-common-overlay.vue'
+import AdminUsersCreate from '../../../../components/admin/users/admin-users-create'
 
 export default {
   name: 'admin',
   components: {
+    AdminUsersCreate,
     ChevronLeftIcon,
     commonLoader,
   },

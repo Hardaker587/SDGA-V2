@@ -9,6 +9,6 @@ export default defineNuxtPlugin((nuxtApp) => {
 
 declare module '#app' {
   interface NuxtApp {
-    $surveyStore(): survey_store
+    $surveyStore(): typeof survey_store
   }
 }
