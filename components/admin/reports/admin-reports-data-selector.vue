@@ -260,7 +260,7 @@ export default {
       await this.$firestore()
         .getAllDocuments('goals')
         .then((res) => {
-          this.goals = res.sort((a, b) => a.sortOrder > b.sortOrder)
+          this.goals = res.sort((a, b) => a.sortOrder - b.sortOrder)
         })
     },
     selectGoal(goal) {

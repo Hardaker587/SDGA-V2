@@ -131,11 +131,11 @@ export default {
           this.surveyGoal = topResult
           await this.categories(topResult.id).then((res) => {
             this.surveyCategories = res.sort(
-              (a, b) => a.sortOrder > b.sortOrder
+              (a, b) => a.sortOrder - b.sortOrder
             )
           })
           await this.questions(topResult.id).then((res) => {
-            this.surveyQuestions = res.sort((a, b) => a.sortOrder > b.sortOrder)
+            this.surveyQuestions = res.sort((a, b) => a.sortOrder - b.sortOrder)
           })
         })
         .finally(() => {

@@ -19,7 +19,13 @@ await authMiddleware()
         mb-4
       "
     >
-      <div class="text-2xl font-black w-full md:w-7/12 text-left">
+      <div
+        v-if="updating"
+        class="text-2xl font-black w-full md:w-7/12 text-left"
+      >
+        Update your details
+      </div>
+      <div v-else class="text-2xl font-black w-full md:w-7/12 text-left">
         Add some details about you:
       </div>
       <div class="form-control w-full md:w-7/12">
@@ -96,6 +102,14 @@ await authMiddleware()
         </select>
       </div>
       <button
+        v-if="updating"
+        class="btn btn-primary w-full md:w-7/12 mt-4"
+        @click="completeProfile()"
+      >
+        Save and continue
+      </button>
+      <button
+        v-else
         class="btn btn-primary w-full md:w-7/12 mt-4"
         @click="completeProfile()"
       >
@@ -155,7 +169,23 @@ export default {
       'Kwa-Zulu Natal',
     ],
   }),
+  computed: {
+    updating() {
+      return this.$route.query.update
+    },
+  },
+  mounted() {
+    if (this.updating) this.getUser()
+  },
   methods: {
+    async getUser() {
+      const user = this.$authStore().getUser
+      await this.$firestore()
+        .getOneDocument('users', user.uid)
+        .then((res) => {
+          this.userDetails = { ...this.userDetails, ...res }
+        })
+    },
     async completeProfile() {
       try {
         await this.$auth()

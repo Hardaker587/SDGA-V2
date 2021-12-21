@@ -111,7 +111,7 @@ export default {
           value: goalId,
         })
         .then((res) => {
-          this.categories = res.sort((a, b) => a.sortOrder > b.sortOrder)
+          this.categories = res.sort((a, b) => a.sortOrder - b.sortOrder)
         })
     },
     async fetchQuestions(goalId) {
@@ -123,7 +123,7 @@ export default {
           value: goalId,
         })
         .then((res) => {
-          this.questions = res.sort((a, b) => a.sortOrder > b.sortOrder)
+          this.questions = res.sort((a, b) => a.sortOrder - b.sortOrder)
         })
     },
     filterQuestions(id) {

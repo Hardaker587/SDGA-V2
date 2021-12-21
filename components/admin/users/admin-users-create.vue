@@ -12,6 +12,7 @@
         placeholder="user@doamin.com"
         class="input input-bordered"
         type="text"
+        @keyup="$emit('user-details', userDetails)"
       />
     </div>
     <div class="form-control w-full md:w-7/12 relative">
@@ -23,6 +24,7 @@
         placeholder="Password"
         class="input input-bordered w-full pr-16"
         :type="displayPassword ? 'text' : 'password'"
+        @keyup="$emit('user-details', userDetails)"
       />
       <button
         class="absolute bottom-0 right-0 rounded-l-none btn btn-primary"
@@ -44,6 +46,7 @@
         placeholder="Joe Soap"
         class="input input-bordered"
         type="text"
+        @keyup="$emit('user-details', userDetails)"
       />
     </div>
     <div class="form-control w-full md:w-7/12">
@@ -55,6 +58,7 @@
         id="dateOfBirth"
         placeholder="01/12/1996"
         class="input input-bordered w-full pr-16"
+        @keyup="$emit('user-details', userDetails)"
       />
     </div>
     <div class="form-control w-full md:w-7/12">
@@ -65,6 +69,7 @@
         v-model="userDetails.university"
         id="universities"
         class="input input-bordered"
+        @keyup="$emit('user-details', userDetails)"
       >
         <option value="">Please select a university</option>
         <option
@@ -86,6 +91,7 @@
         placeholder="Johannesburg"
         class="input input-bordered"
         type="text"
+        @keyup="$emit('user-details', userDetails)"
       />
     </div>
     <div class="form-control w-full md:w-7/12">
@@ -96,6 +102,7 @@
         v-model="userDetails.province"
         id="provinces"
         class="input input-bordered"
+        @keyup="$emit('user-details', userDetails)"
       >
         <option value="">Please select your province</option>
         <option v-for="province in provinces" :key="province" :value="province">

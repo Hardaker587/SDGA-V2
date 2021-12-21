@@ -15,7 +15,7 @@ await adminMiddleware()
         </button>
         <h1 class="text-lg md:text-2xl font-black">Users</h1>
       </div>
-      <div class="form-control mr-2 relative">
+      <div class="form-control mr-2 relative w-8/12">
         <input
           v-model="searchTerm"
           type="text"
@@ -30,18 +30,6 @@ await adminMiddleware()
           <TrashIcon class="w-4" />
         </button>
       </div>
-      <button
-        class="btn btn-primary mr-2 btn-sm md:btn-md"
-        @click="$router.replace('/admin/users/new')"
-      >
-        New User
-      </button>
-      <button
-        class="btn btn-outline btn-primary btn-sm md:btn-md"
-        @click="$router.replace('/admin/users/new/admin')"
-      >
-        New Admin User
-      </button>
     </div>
     <Disclosure v-for="user in filteredUsers" :key="user.id" v-slot="{ open }">
       <DisclosureButton

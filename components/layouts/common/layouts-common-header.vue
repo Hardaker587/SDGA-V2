@@ -44,6 +44,12 @@
         Dashboard
       </button>
       <button
+        class="btn btn-primary ml-2 btn-sm md:btn-md"
+        @click="$router.replace('/account/profile')"
+      >
+        Profile
+      </button>
+      <button
         class="btn btn-outline btn-error ml-2 btn-sm md:btn-md"
         @click="$auth().logOut(true)"
       >
