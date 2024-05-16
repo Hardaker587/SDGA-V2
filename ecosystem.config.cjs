@@ -4,8 +4,8 @@ module.exports = {
       name: "SDGA",
       script: "./.output/server/index.mjs",
       env: {
-        PORT: 5110,
-        NITRO_PORT: 5110,
+        PORT: 5111,
+        NITRO_PORT: 5111,
       },
     },
   ],
