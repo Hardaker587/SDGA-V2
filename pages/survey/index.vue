@@ -22,7 +22,7 @@ await authMiddleware()
         <img
           :src="`/images/goals/Goal_${goal.sortOrder}.svg`"
           alt=""
-          class="w-full h-auto hover:opacity-75 rounded-box"
+          class="w-full h-auto hover:opacity-75 rounded-box aspect-square	"
           @click="$router.push(`/survey/${goal.sortOrder}`)"
         />
       </div>

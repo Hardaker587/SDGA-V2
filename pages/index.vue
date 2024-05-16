@@ -11,7 +11,10 @@
       <h1 class="text-2xl font-black px-6">
         Sustainable Development Goals Assessment Tool (SDGs AT)
       </h1>
-      <p class="mb-4 px-6" :class="clamped ? 'line-clamp-6' : 'line-clamp-none'">
+      <p
+        class="mb-4 px-6"
+        :class="clamped ? 'line-clamp-6' : 'line-clamp-none'"
+      >
         The 2030 Agenda for Sustainable Development Goals (SDGs), adopted by all
         United Nations Member States in 2015, provides a shared blueprint for
         peace, prosperity and partnerships for people and the planet, now and
@@ -30,7 +33,10 @@
         achieving SDGs. A Manual on the SDGs AT will assist to navigate the
         assessment tool.
       </p>
-      <button class="btn btn-sm bg-base-300 text-black outline-none hover:text-white" @click="clamped = !clamped">
+      <button
+        class="btn btn-sm bg-base-300 text-black outline-none hover:text-white"
+        @click="clamped = !clamped"
+      >
         {{ clamped ? 'Show more' : 'Show less' }}
       </button>
     </div>
@@ -60,6 +66,15 @@ export default {
   max-height: 500px;
   min-width: 150px;
   min-height: 150px;
+}
+
+@keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @-webkit-keyframes rotate {

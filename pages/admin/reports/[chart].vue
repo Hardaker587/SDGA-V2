@@ -6,10 +6,10 @@
   <div v-if="$authStore().getclaims?.admin" class="md:w-8/12 mx-auto">
     <div class="flex items-center mb-4">
       <button
-        class="btn btn-circle mr-4 btn-sm md:btn-md"
+        class="btn btn-circle mr-4 btn-sm"
         @click="$router.replace('/admin/reports')"
       >
-        <ChevronLeftIcon class="w-8" />
+        <ChevronLeftIcon class="w-6" />
       </button>
       <div>
         <h1 class="text-lg md:text-2xl font-black capitalize">

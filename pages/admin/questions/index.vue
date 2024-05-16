@@ -5,8 +5,8 @@
 <template>
   <div v-if="$authStore().getclaims?.admin" class="p-4 md:w-8/12 mx-auto">
     <div class="flex items-center mb-4">
-      <button class="btn btn-circle mr-4 btn-sm md:btn-md" @click="$router.push('/admin')">
-        <ChevronLeftIcon class="w-8" />
+      <button class="btn btn-circle mr-4 btn-sm" @click="$router.push('/admin')">
+        <ChevronLeftIcon class="w-6" />
       </button>
       <h1 class="text-lg md:text-2xl font-black">Select a goal to proceed:</h1>
     </div>

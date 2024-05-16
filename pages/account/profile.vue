@@ -4,10 +4,10 @@
     <div class="flex items-center mb-4">
       <div class="flex items-center flex-1">
         <button
-          class="btn btn-circle mr-4 btn-sm md:btn-md"
+          class="btn btn-circle mr-4 btn-sm"
           @click="$router.push('/survey')"
         >
-          <ChevronLeftIcon class="w-8" />
+          <ChevronLeftIcon class="w-6" />
         </button>
         <h1 class="text-lg md:text-2xl font-black">
           Profile:

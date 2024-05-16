@@ -22,10 +22,10 @@ await authMiddleware()
     >
       <div class="flex flex-1 items-center">
         <button
-          class="btn btn-circle mr-4 btn-sm md:btn-md"
+          class="btn btn-circle mr-4 btn-sm"
           @click="$router.push('/survey')"
         >
-          <HomeIcon class="w-8" />
+          <HomeIcon class="w-6" />
         </button>
         <img
           class="goal_image mr-4"

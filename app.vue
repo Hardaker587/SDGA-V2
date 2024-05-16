@@ -1,7 +1,7 @@
 <template>
-  <transition>
+  <NuxtLayout>
     <NuxtPage data-theme="light" />
-  </transition>
+  </NuxtLayout>
 </template>
 
 <style>
@@ -15,3 +15,4 @@
   opacity: 0;
 }
 </style>
+<script setup lang="ts"></script>

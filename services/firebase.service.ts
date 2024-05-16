@@ -9,14 +9,14 @@ export class FirebaseService {
   protected config = useRuntimeConfig()
   constructor() {
     this.configuration = {
-      apiKey: this.config.firebase.apiKey,
-      authDomain: this.config.firebase.authDomain,
-      databaseURL: this.config.firebase.databaseURL,
-      projectId: this.config.firebase.projectId,
-      storageBucket: this.config.firebase.storageBucket,
-      messagingSenderId: this.config.firebase.messageSenderId,
-      appId: this.config.firebase.appId,
-      measurementId: this.config.firebase.measurementId,
+      apiKey: this.config.public.firebase.apiKey,
+      authDomain: this.config.public.firebase.authDomain,
+      databaseURL: this.config.public.firebase.databaseURL,
+      projectId: this.config.public.firebase.projectId,
+      storageBucket: this.config.public.firebase.storageBucket,
+      messagingSenderId: this.config.public.firebase.messageSenderId,
+      appId: this.config.public.firebase.appId,
+      measurementId: this.config.public.firebase.measurementId,
     }
   }
 

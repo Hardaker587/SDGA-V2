@@ -3,10 +3,10 @@
   <div v-else class="md:w-8/12 mx-auto md:px-4">
     <div class="flex items-center my-4">
       <button
-        class="btn btn-circle btn-sm md:btn-md mr-2"
+        class="btn btn-circle btn-sm mr-2"
         @click="$router.push('/admin/questions/')"
       >
-        <ChevronLeftIcon class="w-8" />
+        <ChevronLeftIcon class="w-6" />
       </button>
       <div class="flex items-center">
         <img
@@ -43,7 +43,15 @@
             {{ category.sortOrder }}. {{ category.title }}
           </div>
           <div
-            class="rounded-full p-1 w-8 h-8 bg-black bg-opacity-50 text-center mr-4"
+            class="
+              rounded-full
+              p-1
+              w-8
+              h-8
+              bg-black bg-opacity-50
+              text-center
+              mr-4
+            "
           >
             {{ filterQuestions(category.id).length }}
           </div>
@@ -67,7 +75,7 @@
 
 <script>
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
-import { ChevronUpIcon, ChevronLeftIcon } from '@heroicons/vue/solid'
+import { ChevronUpIcon, ChevronLeftIcon } from '@heroicons/vue/solid/index.js'
 import commonLoader from '@/components/layouts/common/layouts-common-overlay.vue'
 
 export default {
@@ -103,7 +111,6 @@ export default {
         .then((res) => (this.goal = res))
     },
     async fetchCategories(goalId) {
-      console.log('categories')
       await this.$firestore()
         .queryDocuments('categories', {
           key: 'goal',
@@ -115,7 +122,6 @@ export default {
         })
     },
     async fetchQuestions(goalId) {
-      console.log('questions')
       await this.$firestore()
         .queryDocuments('questions', {
           key: 'goal',

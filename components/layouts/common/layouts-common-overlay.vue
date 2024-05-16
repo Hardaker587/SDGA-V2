@@ -47,6 +47,14 @@ export default {
   max-height: 100px;
 }
 
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 @-webkit-keyframes rotate {
   from {
     -webkit-transform: rotate(0deg);

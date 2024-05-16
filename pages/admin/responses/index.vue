@@ -6,8 +6,8 @@
   <commonLoader v-if="loading" :active="loading" />
   <div v-else class="md:w-8/12 mx-auto">
     <div class="flex items-center mb-4">
-      <button class="btn btn-circle mr-4 btn-sm md:btn-md" @click="$router.push('/admin')">
-        <ChevronLeftIcon class="w-8" />
+      <button class="btn btn-circle mr-4 btn-sm" @click="$router.push('/admin')">
+        <ChevronLeftIcon class="w-6" />
       </button>
       <h1 class="text-lg md:text-2xl font-black">Responses</h1>
     </div>
