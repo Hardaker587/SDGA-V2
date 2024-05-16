@@ -13,7 +13,7 @@ module.exports = {
     production: {
       user: "root",
       host: ["102.130.116.19"],
-      ref: "origin/master",
+      ref: "origin/main",
       repo: "git@github.com:Hardaker587/SDGA-V2.git",
       path: "/root/sdga",
       "post-deploy":
